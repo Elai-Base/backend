@@ -1,41 +1,37 @@
 import { defineStore } from 'pinia'
 import { ElMessageBox, ElNotification } from 'element-plus'
-import { reqMenuTreeList, reqMenuInfo, reqMenuUpdate, reqMenuDelete } from '@/api/set/menu';
-import { getStorage, setStorage } from '@/utils/storage';
-import router from '@/router';
-let useSetMenuStore = defineStore('set_menu', {
+import { reqAdminPageList, reqAdminInfo, reqAdminUpdate, reqAdminDelete } from '@/api/set/admin';
+import router from '@/router'
+let useSetAdminStore = defineStore('set_admin', {
     state() {
         return {
-            breadcrumb: [],//面包屑导航
-            allList: [],//所有列表
-            treeList: [],//树状菜单,
+            search: {
+                page: 1,
+                page_size: 10,
+                keyword: ""
+            },
+            list: [],
+            total: 0,
+
             info: null,//详情
             loading: false
         }
     },
     actions: {
-        setBreadcrumb(breadcrumb: any) {
-            this.breadcrumb = breadcrumb
-            setStorage('breadcrumb', breadcrumb);
-        },
-        getBreadcrumb() {
-            let breadcrumb: any = getStorage('breadcrumb');
-            this.breadcrumb = breadcrumb
-            return breadcrumb;
-        },
-        async getTreeList() {
+        async getPageList() {
             this.loading = true
-            const response: any = await reqMenuTreeList();
+            const response: any = await reqAdminPageList(this.search);
             this.loading = false
             if (response.code == 0) {
-                this.treeList = response.data;
+                this.list = response.data.data;
+                this.total = response.data.total;
             } else {
                 ElNotification.error(response.message);
             }
         },
         async getInfo(id: number) {
             this.loading = true
-            const response: any = await reqMenuInfo({ id: id });
+            const response: any = await reqAdminInfo({ id: id });
             this.loading = false
             if (response.code == 0) {
                 this.info = response.data;
@@ -45,7 +41,7 @@ let useSetMenuStore = defineStore('set_menu', {
         },
         async update(data: any) {
             this.loading = true
-            const response: any = await reqMenuUpdate(data);
+            const response: any = await reqAdminUpdate(data);
             this.loading = false
             if (response.code == 0) {
                 router.go(-1)
@@ -63,10 +59,10 @@ let useSetMenuStore = defineStore('set_menu', {
             })
             if (confirm == 'confirm') {
                 this.loading = true
-                const response: any = await reqMenuDelete({ id: id });
+                const response: any = await reqAdminDelete({ id: id });
                 this.loading = false
                 if (response.code == 0) {
-                    this.getTreeList()
+                    this.getPageList()
                 } else {
                     ElNotification.error(response.message);
                 }
@@ -76,4 +72,4 @@ let useSetMenuStore = defineStore('set_menu', {
     getters: {}
 })
 
-export default useSetMenuStore;
+export default useSetAdminStore;

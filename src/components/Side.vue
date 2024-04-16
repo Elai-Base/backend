@@ -5,8 +5,8 @@
 		</div>
 
 		<el-menu class="menu" active-text-color="red" :default-active="menuActive">
-			<div v-for="item in adminMenuStore.treeList" :key="item.id">
-				<el-sub-menu v-if="item.children" :index="'0-' + item.id">
+			<div v-for="item in menuStore.treeList" :key="item.id">
+				<el-sub-menu v-if="item.children.length>0" :index="'0-' + item.id">
 					<template #title>
 						<class-icon :name="item.icon"></class-icon>
 						<span class="name">{{ item.name }}</span>
@@ -33,17 +33,17 @@
 <script lang="ts" setup>
 import { onMounted, watch, ref } from 'vue';
 import { useRouter } from 'vue-router'
-import useAdminMenuStore from '@/store/set/menu';
-const adminMenuStore = useAdminMenuStore();
+import useMenuStore from '@/store/set/menu';
+const menuStore = useMenuStore();
 onMounted(() => {
-	adminMenuStore.getTreeList()
+	menuStore.getTreeList()
 })
 
 const menuActive = ref("")
 const router = useRouter()
 watch(() => router.currentRoute.value,
 	(newValue) => {
-		let breadcrumb = adminMenuStore.getBreadcrumb();
+		let breadcrumb = menuStore.getBreadcrumb();
 		breadcrumb = breadcrumb ? breadcrumb : [];
 		if (newValue.meta.breadcrumb == "3") {
 			breadcrumb.push({
@@ -83,7 +83,7 @@ function changeMenu(item: any, subItem: any) {
 		});
 		jumpUrl = subItem.uri
 	}
-	adminMenuStore.setBreadcrumb(breadcrumb);
+	menuStore.setBreadcrumb(breadcrumb);
 	router.push(jumpUrl);
 }
 </script>

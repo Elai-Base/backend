@@ -35,17 +35,19 @@ let useAdminStore = defineStore('admin', {
             if (response.code == 0) {
                 let token = response.data.token;
                 let refreshToken = response.data.refresh_token;
-                this.token = token
-                this.refreshToken = refreshToken
+
                 setStorage('token', token);
                 setStorage('refresh_token', refreshToken);
                 setStorage('admin_info', response.data.admin_info);
                 ElNotification.success("登录成功！");
+                let _this = this
                 setTimeout(function () {
+                    _this.token = token
+                    _this.refreshToken = refreshToken
                     router.push({
                         path: '/'
                     })
-                }, 200)
+                }, 500)
             } else {
                 ElNotification.error(response.message);
             }

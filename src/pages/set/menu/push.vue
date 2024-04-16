@@ -4,10 +4,10 @@
 			<span>编辑</span>
 			<el-button @click="router.go(-1)">返回</el-button>
 		</template>
-		<el-form label-width="120px" v-loading="adminMenuStore.loading">
+		<el-form label-width="120px" v-loading="menuStore.loading">
 			<el-form-item label="父级菜单">
 				<el-select class="el-col-12" v-model="form.parent_id" clearable filterable placeholder="请选择">
-					<el-option v-for="item in adminMenuStore.treeList" :key="item.id" :label="item.name"
+					<el-option v-for="item in menuStore.treeList" :key="item.id" :label="item.name"
 						:value="item.id">
 					</el-option>
 				</el-select>
@@ -36,10 +36,10 @@
 import { onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import router from "@/router";
-import useAdminMenuStore from '@/store/set/menu';
-const adminMenuStore = useAdminMenuStore();
+import useMenuStore from '@/store/set/menu';
+const menuStore = useMenuStore();
 const form = ref({
-	id: null,
+	id: 0,
 	parent_id: 0,
 	name: '',
 	uri: '',
@@ -50,9 +50,9 @@ const form = ref({
 onMounted(async () => {
 	const route = useRouter()
 	const query = route.currentRoute.value.query
-	if (query.id) {
-		await adminMenuStore.getInfo(query.id)
-		form.value = adminMenuStore.info
+	if (query.id > 0) {
+		await menuStore.getInfo(query.id)
+		form.value = menuStore.info
 	}
 })
 

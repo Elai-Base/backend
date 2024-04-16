@@ -3,23 +3,23 @@
 		<div class="search">
 			<el-row>
 				<el-col :span="2" :offset="22">
-					<el-button size="small" type="primary" @click="goAdd()">
+					<el-button size="small" type="primary" @click="goPush()">
 						添加
 					</el-button>
 				</el-col>
 			</el-row>
 		</div>
-		<el-table :data="listData.data" row-key="id" border v-loading="loading">
+		<el-table :data="roleStore.list" row-key="id" :border="true" v-loading="roleStore.loading">
 			<el-table-column prop="name" label="角色名称"></el-table-column>
 
 			<el-table-column label="操作" width="180">
 				<template #default="scope">
-					<el-button size="small" @click="goEdit(scope.row)">编辑</el-button>
+					<el-button size="small" @click="goPush(scope.row)">编辑</el-button>
 					<el-button
-						v-if="scope.row.id > 2"
+						v-if="scope.row.id > 1"
 						size="small"
 						type="danger"
-						@click="handleDelete(scope.row)"
+						@click="roleStore.del(scope.row.id)"
 					>
 						删除
 					</el-button>
@@ -27,88 +27,34 @@
 			</el-table-column>
 		</el-table>
 		<Pagination
-			:total="listData.total"
+			:total="roleStore.total"
 			@paginationData="paginationData"
 		></Pagination>
 	</el-card>
 </template>
 
-<script>
-import router from "@/router/index.js";
-import store from "@/store/index.js";
-import Pagination from "@/components/Pagination.vue";
-export default {
-	components: {
-		Pagination,
-	},
-	data() {
-		return {
-			loading: false,
-			listData: {
-				total: 0,
-				data: [],
-			}, // 数据列表
-			search: {
-				page: 1,
-				page_size: 10,
-				keywords: "",
-			},
-		};
-	},
-	created() {
-		store.getMenuListAction();
-		this.getList();
-	},
-	methods: {
-		paginationData(val) {
-			this.search.page = val.page;
-			this.search.page_size = val.page_size;
-			this.getList();
-		},
-		async getList() {
-			this.loading = true;
-			const { data: response } = await this.$http.get("/set/role/page_list", {
-				params: this.search,
-			});
-			this.loading = false;
-			if (response.code == 0) {
-				this.listData = response.data;
-			} else {
-				this.$notify.error(response.message);
-			}
-		},
-		goAdd() {
-			router.push({
-				path: "/set/role/push",
-			});
-		},
-		goEdit(row) {
-			router.push({
-				path: "/set/role/push",
-				query: {
-					id: row.id,
-				},
-			});
-		},
-		async handleDelete(row) {
-			const confirmRes = await this.$confirm("删除次条目，是否继续?", "提示", {
-				confirmButtonText: "确定",
-				cancelButtonText: "取消",
-				type: "error",
-			});
-			if (confirmRes != "confirm") {
-				return;
-			}
-			const { data: response } = await this.$http.post("/set/role/delete", {
-				id: row.id,
-			});
-			if (response.code == 0) {
-				this.getList();
-				this.$notify.success("删除成功!");
-			} else {
-				this.$notify.error(response.message);
-			}
-		},
-	},
-};
+<script lang="ts" setup>
+import { onMounted } from "vue"
+import router from '@/router'
+import useRoleStore from '@/store/set/role';
+const roleStore = useRoleStore();
+
+onMounted(async () => {
+	await roleStore.getPageList()
+})
+
+function paginationData(val) {
+	roleStore.search.page = val.page;
+	roleStore.search.page_size = val.page_size;
+	roleStore.getPageList();
+}
+
+function goPush(row: any ) {
+	router.push({
+		path: '/set/role/push',
+		query: {
+			id: row ? row.id : 0
+		}
+	})
+}
 </script>

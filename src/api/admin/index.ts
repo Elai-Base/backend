@@ -2,20 +2,20 @@ import request from '@/utils/request';
 import { LoginForm } from './type';
 //统一管理接口
 enum API {
-    ENV_CONFIG = '/login/env_config',
-    ACCOUNT_LOGIN = '/login/account_login',
-    INFO = '/set/admin/info',
-    LOGIN_OUT = '/set/admin/login_out',
+    env = '/login/env',
+    account_login = '/login/login',
+    info = '/admin/info',
+    login_out = '/admin/login_out',
 }
 //暴露请求函数
 
 //获取环境信息
-export const reqEnvConfig = () => request.get(API.ENV_CONFIG);
+export const reqEnvConfig = () => request.get(API.env);
 //登录方法
-export const reqAccountLogin = (data: LoginForm) => request.post(API.ACCOUNT_LOGIN, data);
+export const reqAccountLogin = (data: LoginForm) => request.post(API.account_login, data);
 
 //退出登录
-export const reqLoginOut = () => request.post(API.LOGIN_OUT);
+export const reqLoginOut = () => request.post(API.login_out);
 
 //获取用户信息
-export const reqAdminInfo = () => request.get(API.INFO);
+export const reqAdminInfo = () => request.get(API.info);

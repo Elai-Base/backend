@@ -7,8 +7,8 @@
 				</el-col>
 			</el-row>
 		</div>
-		<el-table :data="adminMenuStore.treeList" row-key="id" border default-expand-all
-			:tree-props="{ children: 'children', hasChildren: 'hasChildren' }" v-loading="adminMenuStore.loading">
+		<el-table :data="menuStore.treeList" row-key="id" :border="true" default-expand-all
+			:tree-props="{ children: 'children', hasChildren: 'hasChildren' }" v-loading="menuStore.loading">
 			<el-table-column prop="name" label="菜单名称"></el-table-column>
 			<el-table-column prop="uri" label="地址"></el-table-column>
 			<el-table-column prop="weight" label="权重"></el-table-column>
@@ -31,22 +31,23 @@
 </template>
 
 <script lang="ts" setup>
-import useAdminMenuStore from '@/store/set/menu';
-const adminMenuStore = useAdminMenuStore();
-adminMenuStore.getTreeList()
+import useMenuStore from '@/store/set/menu';
+const menuStore = useMenuStore();
+menuStore.getTreeList()
 
 import router from '@/router'
 
-function goPush(row: any = null) {
+function goPush(row: any) {
 	router.push({
 		path: '/set/menu/push',
 		query: {
-			id: row ? row.id : null
+			id: row ? row.id : 0
 		}
 	})
 }
 
+
 function del(row: any = null) {
-	adminMenuStore.del(row.id)
+	menuStore.del(row.id)
 }
 </script>

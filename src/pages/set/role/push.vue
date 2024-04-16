@@ -5,113 +5,72 @@
 				<span>编辑</span>
 			</div>
 			<div class="card-header-action">
-				<el-button @click="goBack()">返回</el-button>
+				<el-button @click="router.go(-1)">返回</el-button>
 			</div>
 		</template>
-		<el-form label-width="120px" v-loading="loading">
+		<el-form label-width="120px" v-loading="roleStore.loading">
 			<el-form-item label="角色名称" class="required">
-				<el-input
-					class="el-col-12"
-					v-model="form.name"
-					placeholder="请输入角色名称"
-				></el-input>
+				<el-input class="el-col-12" v-model="form.name" placeholder="请输入角色名称"></el-input>
 			</el-form-item>
 
 			<el-form-item label="权限菜单" class="required">
-				<el-tree
-					:data="treeList"
-					show-checkbox
-					node-key="id"
-					default-expand-all
-					:props="defaultProps"
-					ref="tree"
-					:default-checked-keys="defaultKey"
-				>
+				<el-tree :data="menuStore.treeList" show-checkbox node-key="id" default-expand-all :props="defaultProps"
+					ref="treeRef" :default-checked-keys="defaultKey">
 				</el-tree>
 			</el-form-item>
 
 			<el-form-item>
-				<el-button @click="goBack()">返回</el-button>
-				<el-button type="primary" @click="onSubmit">提交</el-button>
+				<el-button @click="router.go(-1)">返回</el-button>
+				<el-button type="primary" @click="update()">提交</el-button>
 			</el-form-item>
 		</el-form>
 	</el-card>
 </template>
 
-<script>
-import router from "@/router/index.js";
-import tools from "@/utils/tools.js";
-export default {
-	data() {
-		return {
-			loading: false,
-			treeList: [],
-			defaultProps: {
-				expandTrigger: "hover",
-				value: "id",
-				label: "name",
-			},
-			defaultKey: [],
-			id: "",
-			form: {
-				id: "",
-				name: "",
-				permission: "",
-			},
-		};
-	},
-	created() {
-		this.getTreeList();
-		this.id = tools.getQueryString("id");
-		if (this.id) {
-			this.getInfo();
-		}
-	},
-	methods: {
-		goBack() {
-			router.go(-1);
-		},
-		async getTreeList() {
-			const { data: response } = await this.$http.get(
-				"/set/role/permission_tree"
-			);
-			if (response.code == 0) {
-				this.treeList = response.data;
-			} else {
-				this.$notify.error(response.message);
-			}
-		},
-		async getInfo() {
-			this.loading = true;
-			const { data: response } = await this.$http.get("/set/role/info", {
-				params: {
-					id: this.id,
-				},
-			});
+<script lang="ts" setup>
+import { onMounted, ref } from "vue"
+import { useRouter } from "vue-router"
+import { ElTree } from 'element-plus'
 
-			this.loading = false;
-			if (response.code == 0) {
-				let info = response.data;
-				this.form = info;
-				this.defaultKey = info.permission;
-			} else {
-				this.$notify.error(response.message);
-			}
-		},
-		async onSubmit() {
-			this.form.permission = this.$refs.tree.getCheckedKeys();
-			const { data: response } = await this.$http.post(
-				"/set/role/push",
-				this.form
-			);
+import router from '@/router'
+import useRoleStore from '@/store/set/role';
+const roleStore = useRoleStore();
 
-			if (response.code == 0) {
-				this.$notify.success("操作成功");
-				router.go(-1);
-			} else {
-				this.$notify.error(response.message);
-			}
-		},
-	},
-};
+import useMenuStore from '@/store/set/menu';
+const menuStore = useMenuStore();
+const treeRef = ref<InstanceType<typeof ElTree>>()
+onMounted(async () => {
+	const route = useRouter()
+	const query = route.currentRoute.value.query
+	if (query.id > 0) {
+		await roleStore.getInfo(query.id)
+		form.value = roleStore.info
+		defaultKey.value = form.value.permission
+	}
+	await menuStore.getTreeList()
+})
+
+function update() {
+	form.value.permission = treeRef.value.getCheckedKeys();
+	roleStore.update(form.value)
+}
+
+const form = ref({
+	id: 0,
+	name: "",
+	permission: [],
+})
+const defaultProps = ref({
+	expandTrigger: "hover",
+	value: "id",
+	label: "name",
+})
+const defaultKey = ref([])
+
 </script>
+
+<style type="sass" scoped>
+.el-tree {
+	min-width: 160px
+}
+</style>
