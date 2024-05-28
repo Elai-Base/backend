@@ -2,25 +2,49 @@
     <div class="page-login">
         <div class="login">
             <div class="login-left">
-                <div class="tips-1">xxx系统</div>
                 <div class="image"></div>
             </div>
             <div class="login-right">
                 <el-form class="form">
+                    <div class="login-title">
+                        <div class="title">欢迎登录</div>
+                    </div>
                     <div class="login-type">
-                        <div class="type" @click="changeLoginType(1)" :class="loginType == 1 ? 'active' : ''">账号登录</div>
-                        <div class="type" @click="changeLoginType(2)" :class="loginType == 2 ? 'active' : ''">手机号登录</div>
+                        <div
+                            class="type"
+                            @click="changeLoginType(1)"
+                            :class="loginType == 1 ? 'active' : ''"
+                        >
+                            账号登录
+                        </div>
+                        <div
+                            class="type"
+                            @click="changeLoginType(2)"
+                            :class="loginType == 2 ? 'active' : ''"
+                        >
+                            手机号登录
+                        </div>
                     </div>
                     <el-form-item>
-                        <el-input placeholder="请输入账号" autocomplete="new-password" v-model="loginForm.username"></el-input>
+                        <el-input
+                            placeholder="请输入账号"
+                            autocomplete="new-password"
+                            v-model="loginForm.username"
+                        ></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-input type="password" placeholder="请输入密码" autocomplete="new-password"
-                            v-model="loginForm.password" :show-password="true">
-                        </el-input>
+                        <el-input
+                            type="password"
+                            placeholder="请输入密码"
+                            autocomplete="new-password"
+                            v-model="loginForm.password"
+                            :show-password="true"
+                        ></el-input>
                     </el-form-item>
                     <el-form-item>
-                        <el-button v-loading="adminStore.loginLoading" @click="login">登录</el-button>
+                        <el-button v-loading="adminStore.loginLoading" @click="login">
+                            登录
+                        </el-button>
                         <div class="tips-list">
                             <div class="tips">忘记密码</div>
                         </div>
@@ -32,86 +56,83 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref } from "vue";
-import useAdminStore from "@/store/admin"
-const adminStore = useAdminStore()
+import { onMounted, ref } from 'vue';
+import useAdminStore from '@/store/admin';
+const adminStore = useAdminStore();
 
-const loginType = ref(1)
+const loginType = ref(1);
 const loginForm = ref({
-    username: "",
-    password: "",
-})
+    username: '',
+    password: '',
+});
 
 const changeLoginType = (type: number) => {
-    loginType.value = type
-}
+    loginType.value = type;
+};
 const login = () => {
-    adminStore.accountLogin(loginForm.value)
-}
+    adminStore.accountLogin(loginForm.value);
+};
 onMounted(() => {
-    adminStore.getEnvConfig()
-})
+    adminStore.getEnvConfig();
+});
 </script>
 
 <style lang="scss" scoped>
 .page-login {
     width: 100%;
     height: 100vh;
+    background: url('@/assets/images/login-bg.png') no-repeat;
+    background-size: cover;
 
     .login {
-        width: 1000px;
-        height: 520px;
-        border-radius: 8px;
+        width: 1200px;
+        height: 700px;
+        border-radius: 10px;
         box-shadow: 0px 1px 2px 0px rgba(136, 136, 136, 45);
-        margin: calc((100vh - 520px)/2) auto;
+        margin: calc((100vh - 700px) / 2) auto;
+        background: #ffffff;
         display: flex;
         align-items: center;
 
         .login-left {
-            width: 480px;
+            width: 600px;
             height: 100%;
-            background-color: rgba(108, 116, 247, 1);
-            padding: 50px;
-
-            .tips-1 {
-                color: rgba(245, 245, 245, 1);
-                font-size: 32px;
-            }
-
-            .tips-2 {
-                margin-top: 20px;
-                color: rgba(245, 245, 245, 1);
-                font-size: 16px;
-                font-family: AlibabaPuHui-regular;
-            }
 
             .image {
-                margin-top: 30px;
-                width: 360px;
-                height: 360px;
-
-                background: url("@/assets/images/login-background.png") no-repeat;
+                margin-top: 75px;
+                width: 600px;
+                height: 450px;
+                background: url('@/assets/images/login-1.png') no-repeat;
                 background-size: cover;
             }
         }
 
         .login-right {
-            width: 100%;
-
+            width: 500px;
+            margin: 0 50px;
+            border: 1px solid rgba(245, 245, 245, 1);
+            box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+            .login-title {
+                .title {
+                    text-align: center;
+                    font-size: 30px;
+                    font-weight: bold;
+                }
+            }
             .login-type {
-                margin-bottom: 50px;
+                margin: 40px;
                 display: flex;
                 justify-content: space-around;
 
                 .type {
-                    color: rgba(136, 136, 136, 1);
-                    font-size: 16px;
+                    color: rgba(102, 102, 102, 1);
+                    font-size: 18px;
                     cursor: pointer;
                 }
 
                 .active {
-                    color: rgba(16, 16, 16, 1);
-                    font-size: 16px;
+                    color: rgba(0, 84, 254, 1);
+                    font-size: 18px;
                 }
             }
 
@@ -125,7 +146,7 @@ onMounted(() => {
 
                 .el-button {
                     width: 100%;
-                    background-color: rgba(108, 116, 247, 1);
+                    background-color: rgba(0, 84, 254, 1);
                     color: #fff;
                     height: 50px;
                     line-height: 50px;
@@ -146,7 +167,7 @@ onMounted(() => {
                 }
             }
         }
-
     }
 }
-</style>@/store/admin/admin
+</style>
+@/store/admin/admin

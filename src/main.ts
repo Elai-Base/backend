@@ -13,9 +13,9 @@ import globalComponent from '@/components/global';
 //引入全局样式
 import '@/assets/css/index.scss';
 //引入iconfont
-import '@/assets/iconfont/iconfont.css'
+import '@/assets/iconfont/iconfont.css';
 //引入路由
-import router from './router'
+import router from './router';
 import pinia from './store';
 //引入pinia
 const app = createApp(App);

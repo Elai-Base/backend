@@ -1,34 +1,61 @@
 import { defineStore } from 'pinia';
 import { ElMessageBox, ElNotification } from 'element-plus';
 import {
-    reqPermissionTreeList,
-    reqPermissionInfo,
-    reqPermissionUpdate,
-    reqPermissionDelete,
-} from '@/api/set/permission';
+    reqArticlePageList,
+    reqArticleInfo,
+    reqArticleUpdate,
+    reqArticleDelete,
+} from '@/api/article/article';
 import router from '@/router';
-let useSetPermissionStore = defineStore('set_permission', {
+let useArticleStore = defineStore('article_article', {
     state() {
         return {
+            search: {
+                page: 1,
+                page_size: 10,
+                keyword: '',
+            },
             list: [],
-            info: null, //详情
+            total: 0,
+
+            info: {
+                uuid: '',
+                title: '',
+                cover: '',
+                detail_info: {
+                    content: '',
+                },
+            }, //详情
             loading: false,
         };
     },
     actions: {
-        async getTreeList() {
+        async searchList() {
+            this.search.page = 1;
             this.loading = true;
-            const response: any = await reqPermissionTreeList();
+            const response: any = await reqArticlePageList(this.search);
             this.loading = false;
             if (response.code == 0) {
-                this.list = response.data;
+                this.list = response.data.data;
+                this.total = response.data.total;
             } else {
                 ElNotification.error(response.message);
             }
         },
-        async getInfo(id: number) {
+        async getPageList() {
             this.loading = true;
-            const response: any = await reqPermissionInfo({ id: id });
+            const response: any = await reqArticlePageList(this.search);
+            this.loading = false;
+            if (response.code == 0) {
+                this.list = response.data.data;
+                this.total = response.data.total;
+            } else {
+                ElNotification.error(response.message);
+            }
+        },
+        async getInfo(uuid: string) {
+            this.loading = true;
+            const response: any = await reqArticleInfo({ uuid: uuid });
             this.loading = false;
             if (response.code == 0) {
                 this.info = response.data;
@@ -38,7 +65,7 @@ let useSetPermissionStore = defineStore('set_permission', {
         },
         async update(data: any) {
             this.loading = true;
-            const response: any = await reqPermissionUpdate(data);
+            const response: any = await reqArticleUpdate(data);
             this.loading = false;
             if (response.code == 0) {
                 router.go(-1);
@@ -46,7 +73,7 @@ let useSetPermissionStore = defineStore('set_permission', {
                 ElNotification.error(response.message);
             }
         },
-        async del(id: any) {
+        async del(uuid: any) {
             const confirm = await ElMessageBox.confirm('确认删除？', '提示', {
                 confirmButtonText: '确定',
                 cancelButtonText: '取消',
@@ -56,7 +83,7 @@ let useSetPermissionStore = defineStore('set_permission', {
             });
             if (confirm == 'confirm') {
                 this.loading = true;
-                const response: any = await reqPermissionDelete({ id: id });
+                const response: any = await reqArticleDelete({ uuid: uuid });
                 this.loading = false;
                 if (response.code == 0) {
                     this.getPageList();
@@ -69,4 +96,4 @@ let useSetPermissionStore = defineStore('set_permission', {
     getters: {},
 });
 
-export default useSetPermissionStore;
+export default useArticleStore;

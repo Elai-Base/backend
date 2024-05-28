@@ -8,7 +8,7 @@ enum API {
     delete = '/set/admin/delete',
 }
 //暴露请求函数
-export const reqAdminPageList = (data: any) => request.get(API.page_list,{ params: data });
+export const reqAdminPageList = (data: any) => request.get(API.page_list, { params: data });
 export const reqAdminAllList = () => request.get(API.all_list);
 export const reqAdminInfo = (data: any) => request.get(API.info, { params: data });
 export const reqAdminUpdate = (data: any) => request.post(API.update, data);

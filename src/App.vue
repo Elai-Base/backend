@@ -5,7 +5,7 @@
 
         <div class="page-right">
             <!-- 顶面导航 -->
-            <Header> </Header>
+            <Header></Header>
             <div class="page-content">
                 <router-view></router-view>
             </div>
@@ -18,16 +18,16 @@
 </template>
 
 <script lang="ts" setup>
-import Header from "@/components/Header.vue"
-import Footer from "@/components/Footer.vue"
-import Side from "@/components/Side.vue"
+import Header from '@/components/Header.vue';
+import Footer from '@/components/Footer.vue';
+import Side from '@/components/Side.vue';
 import router from './router';
-import useAdminStore from "@/store/admin"
-const adminStore = useAdminStore()
+import useAdminStore from '@/store/admin';
+const adminStore = useAdminStore();
 if (!adminStore.token) {
     router.push({
-        path: '/login'
-    })
+        path: '/login',
+    });
 }
 </script>
 
@@ -45,7 +45,6 @@ if (!adminStore.token) {
     .page-header {
         width: 100%;
         height: $base-header-height;
-        background: $base-header-background;
     }
 
     .page-content {

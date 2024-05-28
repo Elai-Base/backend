@@ -8,7 +8,7 @@ enum API {
     delete = '/set/role/delete',
 }
 //暴露请求函数
-export const reqRolePageList = (data: any) => request.get(API.page_list,{ params: data });
+export const reqRolePageList = (data: any) => request.get(API.page_list, { params: data });
 export const reqRoleAllList = () => request.get(API.all_list);
 export const reqRoleInfo = (data: any) => request.get(API.info, { params: data });
 export const reqRoleUpdate = (data: any) => request.post(API.update, data);

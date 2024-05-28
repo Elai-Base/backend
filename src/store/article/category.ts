@@ -1,16 +1,16 @@
 import { defineStore } from 'pinia';
 import { ElMessageBox, ElNotification } from 'element-plus';
 import {
-    reqPermissionTreeList,
-    reqPermissionInfo,
-    reqPermissionUpdate,
-    reqPermissionDelete,
-} from '@/api/set/permission';
+    reqArticleCategoryTreeList,
+    reqArticleCategoryInfo,
+    reqArticleCategoryUpdate,
+    reqArticleCategoryDelete,
+} from '@/api/article/category';
 import router from '@/router';
-let useSetPermissionStore = defineStore('set_permission', {
+let useArticleCategoryStore = defineStore('article_category', {
     state() {
         return {
-            list: [],
+            treeList: [], //树状菜单,
             info: null, //详情
             loading: false,
         };
@@ -18,17 +18,17 @@ let useSetPermissionStore = defineStore('set_permission', {
     actions: {
         async getTreeList() {
             this.loading = true;
-            const response: any = await reqPermissionTreeList();
+            const response: any = await reqArticleCategoryTreeList();
             this.loading = false;
             if (response.code == 0) {
-                this.list = response.data;
+                this.treeList = response.data;
             } else {
                 ElNotification.error(response.message);
             }
         },
         async getInfo(id: number) {
             this.loading = true;
-            const response: any = await reqPermissionInfo({ id: id });
+            const response: any = await reqArticleCategoryInfo({ id: id });
             this.loading = false;
             if (response.code == 0) {
                 this.info = response.data;
@@ -38,7 +38,7 @@ let useSetPermissionStore = defineStore('set_permission', {
         },
         async update(data: any) {
             this.loading = true;
-            const response: any = await reqPermissionUpdate(data);
+            const response: any = await reqArticleCategoryUpdate(data);
             this.loading = false;
             if (response.code == 0) {
                 router.go(-1);
@@ -56,10 +56,10 @@ let useSetPermissionStore = defineStore('set_permission', {
             });
             if (confirm == 'confirm') {
                 this.loading = true;
-                const response: any = await reqPermissionDelete({ id: id });
+                const response: any = await reqArticleCategoryDelete({ id: id });
                 this.loading = false;
                 if (response.code == 0) {
-                    this.getPageList();
+                    this.getTreeList();
                 } else {
                     ElNotification.error(response.message);
                 }
@@ -69,4 +69,4 @@ let useSetPermissionStore = defineStore('set_permission', {
     getters: {},
 });
 
-export default useSetPermissionStore;
+export default useArticleCategoryStore;

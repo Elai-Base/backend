@@ -1,4 +1,3 @@
-
 export interface LoginForm {
     username: string;
     password: string;
@@ -6,7 +5,7 @@ export interface LoginForm {
 
 export interface response {
     code: number;
-    message: string
+    message: string;
     data: any;
 }
 

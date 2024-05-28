@@ -2,9 +2,9 @@ import axios from 'axios';
 import { ElNotification } from 'element-plus';
 import router from '@/router';
 import Auth from './auth';
-let auth = new Auth()
+let auth = new Auth();
 //例如axios对象的create方法，去创建axios实例
-let baseURL = import.meta.env.VITE_APP_BASE_API
+let baseURL = import.meta.env.VITE_APP_BASE_API;
 let request = axios.create({
     //配置接口地址
     baseURL: baseURL,

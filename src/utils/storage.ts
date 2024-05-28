@@ -1,11 +1,10 @@
-
 function getStorage(key: string) {
     let string: any = localStorage.getItem(key);
-    let value = ''
+    let value = '';
     try {
-        value = JSON.parse(string)
+        value = JSON.parse(string);
     } catch {
-        value = string
+        value = string;
     }
     return value;
 }
@@ -16,21 +15,16 @@ function setStorage(key: string, data: any) {
         value = JSON.stringify(data);
     }
     if (typeof data === 'string') {
-        value = data
+        value = data;
     }
-    localStorage.setItem(key, value)
+    localStorage.setItem(key, value);
 }
 
 function removeStorage(key: string) {
-    localStorage.removeItem(key)
+    localStorage.removeItem(key);
 }
 
 function clearStorage() {
-    localStorage.clear()
+    localStorage.clear();
 }
-export {
-    getStorage,
-    setStorage,
-    removeStorage,
-    clearStorage
-}
+export { getStorage, setStorage, removeStorage, clearStorage };

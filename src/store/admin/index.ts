@@ -1,9 +1,9 @@
-import { defineStore } from 'pinia'
-import { LoginForm } from '@/api/admin/type'
-import { reqAccountLogin, reqEnvConfig, reqAdminInfo } from '@/api/admin'
-import { ElNotification } from 'element-plus'
-import { setStorage, getStorage } from '@/utils/storage'
-import router from '@/router'
+import { defineStore } from 'pinia';
+import { LoginForm } from '@/api/admin/type';
+import { reqAccountLogin, reqEnvConfig, reqAdminInfo } from '@/api/admin';
+import { ElNotification } from 'element-plus';
+import { setStorage, getStorage } from '@/utils/storage';
+import router from '@/router';
 let useAdminStore = defineStore('admin', {
     state() {
         return {
@@ -12,12 +12,12 @@ let useAdminStore = defineStore('admin', {
             uid: getStorage('uid'),
             loginLoading: false,
             adminInfo: {
-                name: "",
+                name: '',
                 role_info: {
-                    name: "admin",
-                }
+                    name: 'admin',
+                },
             },
-        }
+        };
     },
     actions: {
         async getEnvConfig() {
@@ -29,9 +29,9 @@ let useAdminStore = defineStore('admin', {
             }
         },
         async accountLogin(data: LoginForm) {
-            this.loginLoading = true
+            this.loginLoading = true;
             const response: any = await reqAccountLogin(data);
-            this.loginLoading = false
+            this.loginLoading = false;
             if (response.code == 0) {
                 let token = response.data.token;
                 let refreshToken = response.data.refresh_token;
@@ -39,15 +39,15 @@ let useAdminStore = defineStore('admin', {
                 setStorage('token', token);
                 setStorage('refresh_token', refreshToken);
                 setStorage('admin_info', response.data.admin_info);
-                ElNotification.success("登录成功！");
-                let _this = this
+                ElNotification.success('登录成功！');
+                let _this = this;
                 setTimeout(function () {
-                    _this.token = token
-                    _this.refreshToken = refreshToken
+                    _this.token = token;
+                    _this.refreshToken = refreshToken;
                     router.push({
-                        path: '/'
-                    })
-                }, 500)
+                        path: '/',
+                    });
+                }, 500);
             } else {
                 ElNotification.error(response.message);
             }
@@ -59,13 +59,13 @@ let useAdminStore = defineStore('admin', {
                 let adminInfo = response.data;
                 this.adminInfo = adminInfo;
                 adminInfo = JSON.stringify(adminInfo);
-                localStorage.setItem("admin_info", adminInfo);
+                localStorage.setItem('admin_info', adminInfo);
             } else {
                 ElNotification.error(response.message);
             }
         },
     },
-    getters: {}
-})
+    getters: {},
+});
 
 export default useAdminStore;
