@@ -1,15 +1,15 @@
 export interface LoginForm {
-  username: string;
-  password: string;
+    username: string;
+    password: string;
 }
 
 export interface response {
-  code: number;
-  message: string;
-  data: any;
+    code: number;
+    message: string;
+    data: any;
 }
 
 export interface loginResponseData {
-  code: number;
-  data: any;
+    code: number;
+    data: any;
 }
