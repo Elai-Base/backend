@@ -30,8 +30,8 @@ request.interceptors.response.use(
                 //正常返回
                 break;
             case -2:
-                // token失效,refreshToken可以刷新
-                // 可以额外处理，目前暂未处理
+            // token失效,refreshToken可以刷新
+            // 可以额外处理，目前暂未处理
             case -3:
                 // 双token失效
                 // 防止登录失效多个请求重复提示问题

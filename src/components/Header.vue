@@ -59,8 +59,7 @@ import useMenuStore from '@/store/set/menu';
 const menuStore = useMenuStore();
 menuStore.getBreadcrumb();
 
-
-function loginOut(){
+function loginOut() {
     adminStore.logout();
 }
 </script>

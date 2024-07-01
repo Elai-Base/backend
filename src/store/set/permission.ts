@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ElMessageBox, ElNotification } from 'element-plus';
+import { ElMessageBox } from 'element-plus';
 import {
     reqPermissionTreeList,
     reqPermissionInfo,

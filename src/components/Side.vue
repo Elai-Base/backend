@@ -34,7 +34,7 @@
 </template>
 
 <script lang="ts" setup>
-import {  onMounted, watch, ref ,onBeforeMount } from 'vue';
+import { onMounted, watch, ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
 import useMenuStore from '@/store/set/menu';
 const menuStore = useMenuStore();
@@ -42,9 +42,9 @@ const menuStore = useMenuStore();
 import useAdminStore from '@/store/admin';
 const adminStore = useAdminStore();
 
-onBeforeMount(()=>{
+onBeforeMount(() => {
     adminStore.checkLogin();
-})
+});
 onMounted(() => {
     menuStore.getTreeList();
 });

@@ -61,7 +61,7 @@ function goPush(row: any) {
     });
 }
 
-function urlFilter(url:string) {
+function urlFilter(url: string) {
     //替换所有的换行符
     if (url) {
         url = url.replace(/\r\n/g, '<br>');

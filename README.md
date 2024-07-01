@@ -10,7 +10,6 @@
 # 代码优化工具
 + eslint 检测语法
 + prettier 代码格式化
-+ husky   git钩子
 + commitlint 限制git commit 格式
 
 # 包管理工具
