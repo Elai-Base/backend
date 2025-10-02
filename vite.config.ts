@@ -18,15 +18,6 @@ export default defineConfig(({ mode }) => {
                 '@': path.resolve('src'), //配置src的别名
             },
         },
-        css: {
-            preprocessorOptions: {
-                //定义全局scss变量
-                scss: {
-                    javascriptEnabled: true,
-                    additionalData: '@import "./src/assets/css/theme-default.scss";',
-                },
-            },
-        },
         plugins: [
             vue(),
             createSvgIconsPlugin({

@@ -5,7 +5,7 @@
         </div>
 
         <el-menu class="menu" active-text-color="#0054fe" :default-active="menuActive">
-            <div v-for="item in menuStore.treeList" :key="item.id">
+            <div v-for="item in menuStore.tree" :key="item.id">
                 <el-sub-menu v-if="item.children.length > 0" :index="'0-' + item.id">
                     <template #title>
                         <class-icon :name="item.icon"></class-icon>
@@ -36,17 +36,11 @@
 <script lang="ts" setup>
 import { onMounted, watch, ref, onBeforeMount } from 'vue';
 import { useRouter } from 'vue-router';
-import useMenuStore from '@/store/set/menu';
+import useMenuStore from '@/stores/set/menu';
 const menuStore = useMenuStore();
 
-import useAdminStore from '@/store/admin';
-const adminStore = useAdminStore();
-
-onBeforeMount(() => {
-    adminStore.checkLogin();
-});
 onMounted(() => {
-    menuStore.getTreeList();
+    menuStore.treeFunc();
 });
 
 const menuActive = ref('');
@@ -54,7 +48,7 @@ const router = useRouter();
 watch(
     () => router.currentRoute.value,
     newValue => {
-        let breadcrumb = menuStore.getBreadcrumb();
+        let breadcrumb = menuStore.getBreadcrumbFunc();
         breadcrumb = breadcrumb ? breadcrumb : [];
         if (newValue.meta.breadcrumb == '3') {
             breadcrumb.push({
@@ -94,16 +88,16 @@ function changeMenu(item: any, subItem: any) {
         });
         jumpUrl = subItem.uri;
     }
-    menuStore.setBreadcrumb(breadcrumb);
+    menuStore.setBreadcrumbFunc(breadcrumb);
     router.push(jumpUrl);
 }
 </script>
 
 <style lang="scss" scoped>
 .page-slider {
-    width: $base-menu-width;
+    width: 240px;
     height: 100vh;
-    background: $base-menu-background;
+    background: #ffffff;
     box-shadow: 4px 0px 4px rgba(43, 45, 55, 0.01);
 
     .header {
@@ -123,7 +117,6 @@ function changeMenu(item: any, subItem: any) {
 
     .menu {
         .name {
-            font-family: AlibabaPuHuiTi-Semibold;
             font-size: 15px;
             // color: rgba(113, 117, 121, 1);
         }

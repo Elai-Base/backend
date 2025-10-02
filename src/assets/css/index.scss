@@ -1,9 +1,5 @@
 //引入清除默认样式
-@import './reset.scss';
-
-html {
-    font-family: PingFangSC-Light;
-}
+@use './reset.scss';
 
 //搜索相关
 .search {

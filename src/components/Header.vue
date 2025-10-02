@@ -26,10 +26,10 @@
 				</el-button>
 			</div> -->
             <div class="account-box">
-                {{ adminStore.adminInfo.name }}({{ adminStore.adminInfo.role_info.name }})
+                {{ adminStore.loginInfo.name }}({{ adminStore.loginInfo.role_info.name }})
             </div>
 
-            <div class="message-box" @click="goMessage()">
+            <div class="message-box">
                 <span class="iconfont icon-message-notice"></span>
                 <!-- <el-badge v-if="unReadNum > 0" :value="unReadNum" type="warning"
 					style="margin-left: -10px; margin-top: -10px">
@@ -51,17 +51,19 @@
 </template>
 
 <script setup lang="ts">
-import useAdminStore from '@/store/admin';
-const adminStore = useAdminStore();
-adminStore.getInfo();
+import useSetAdminStore from '@/stores/set/admin';
+const adminStore = useSetAdminStore();
+adminStore.loginInfoFunc();
 
-import useMenuStore from '@/store/set/menu';
+import useMenuStore from '@/stores/set/menu';
 const menuStore = useMenuStore();
-menuStore.getBreadcrumb();
+menuStore.getBreadcrumbFunc();
 
-function loginOut() {
-    adminStore.logout();
-}
+import useLoginStore from '@/stores/login';
+const loginStore = useLoginStore();
+const loginOut = () => {
+    loginStore.loginOutFunc();
+};
 </script>
 
 <style lang="scss" scoped>
