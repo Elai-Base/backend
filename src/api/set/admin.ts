@@ -2,10 +2,10 @@ import { AdminDeleteForm, AdminForm, AdminSearch } from '@/types/set/admin';
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
-    page = '/admins',
-    all = '/admins/all',
-    login_info = '/admin/info',
-    uri = '/admin',
+	page = '/admins',
+	all = '/admins/all',
+	login_info = '/admin/info',
+	uri = '/admin',
 }
 //暴露请求函数
 export const reqAdminLoginInfo = () => axios.get(api.login_info);

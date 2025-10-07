@@ -1,8 +1,8 @@
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
-    tree = '/system/permissions/tree',
-    uri = '/system/permission',
+	tree = '/system/permissions/tree',
+	uri = '/system/permission',
 }
 //暴露请求函数
 export const reqPermissionTreeList = () => axios.get(api.tree);

@@ -1,38 +1,36 @@
 module.exports = {
-    //运行环境
+    root: true,
+    // 环境：指定代码运行的环境，每个环境会预设一组全局变量
     env: {
-        browser: true, //浏览器
-        es2021: true, //es2021
+        browser: true, // 浏览器环境
+        es2021: true, // ES2021 特性
+        node: true, // Node.js 环境
     },
-    //规则继承
-    extends: [
-        //全部规则默认是关闭的，这个配置项开启推荐规则，详细参考广泛文档。例如：函数不能重名，对象不能出现重复key
-        'eslint:recommended',
-        //ts语法规则
-        'plugin:@typescript-eslint/recommended',
-        //vue3语法规则
-        'plugin:vue/vue3-essential',
-        //使用prettier格式化
-        'prettier',
-    ],
-    //为特定类型的文件指定处理器
-    overrides: [
-        {
-            env: {
-                node: true,
-            },
-            files: ['.eslintrc.{js,cjs}'],
-            parserOptions: {
-                sourceType: 'script',
-            },
-        },
-    ],
+    // 解析器设置
+    parser: 'vue-eslint-parser',
+    // 解析器选项
     parserOptions: {
+        parser: '@typescript-eslint/parser', // 解析TypeScript
         ecmaVersion: 'latest',
-        parser: '@typescript-eslint/parser', //ts解析器
         sourceType: 'module',
     },
-    plugins: ['@typescript-eslint', 'vue', 'prettier'],
+    // 继承的规则集
+    extends: [
+        'eslint:recommended', // ESLint 官方推荐规则
+        'plugin:vue/vue3-recommended', // Vue3 官方推荐规则
+        'plugin:@typescript-eslint/recommended', // TypeScript 官方推荐规则
+        'plugin:prettier/recommended', // 整合Prettier
+        'prettier', // 关闭与Prettier冲突的ESLint规则
+    ],
+    // 插件
+    plugins: ['vue', '@typescript-eslint', 'prettier', 'import'],
+
+    settings: {
+        'import/resolver': {
+            typescript: {}, // 支持TypeScript的import解析
+        },
+    },
+
     /**
      * 限制规则
      * off 或者 0 => 关闭规则
@@ -40,27 +38,55 @@ module.exports = {
      * error 或者 2 => 规则作为一个错误（代码不能执行，界面错误）
      */
     rules: {
+        // 基础规则 参考配置：@see(https://eslint.org/docs/latest/rules/)
         'prettier/prettier': 'error', // 开启规则
-        //eslint 参考配置：@see(https://eslint.org/docs/latest/rules/)
+        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off', // 生产环境禁止使用console
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off', // 生产环境禁止使用debugger
         'no-var': 'error', //要求使用let or const 不是 var
         'no-multiple-empty-lines': ['warn', { max: 1 }], //不允许使用多个空行
-        'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-        'no-unexpected-multiline': 'error', //禁止多余的空行
-        'no-useless-escape': 'off', //禁止不需要的转义字符
+        'no-unexpected-multiline': 'error', //不允许 多余的空行
+        'no-useless-escape': 'off', //不允许 不需要的转义字符
 
-        //typescript 参考配置：@see(https://typescript-eslint.io/rules/)
-        '@typescript-eslint/no-unused-vars': 'error', //禁止定义未使用的变量
-        '@typescript-eslint/prefer-ts-expect-error': 'error', //禁止使用ts-ignore
-        '@typescript-eslint/no-explicit-any': 'off', //禁止使用any类型
-        '@typescript-eslint/no-non-null-assertion': 'off',
-        '@typescript-eslint/no-namespace': 'off', //禁止使用自定义TypeScript模块
-        '@typescript-eslint/semi': 'off',
+        // Vue规则 参考配置：@see(https://eslint.vuejs.org/rules/)
+        'vue/script-setup-uses-vars': 'error', // 确保script-setup中声明的变量被使用
+        'vue/no-mutating-props': 'error', // 禁止修改props
+        'vue/no-unused-components': 'warn', // 未使用的组件警告
+        'vue/attribute-hyphenation': ['error', 'always'], // 属性使用连字符命名
+        'vue/html-self-closing': [
+            'error',
+            {
+                html: {
+                    void: 'always',
+                    normal: 'always',
+                    component: 'always',
+                },
+                svg: 'always',
+                math: 'always',
+            },
+        ],
 
-        //eslint-plugin-vue @see(https://eslint.vuejs.org/rules/)
-        'vue/multi-word-component-names': 'off', //要求组件名称始终为"-"链接的单词
-        'vue/script-setup-uses-vars': 'error', //防止<script setup>使用的变量<template></template>
-        'vue/no-mutating-props': 'off', //不允许组件prop的改变
-        'vue/attribute-hyphenation': 'off', //对模板中的自定义组件强制执行属性命名样
+        // TypeScript规则 参考配置：@see(https://typescript-eslint.io/rules/)
+        '@typescript-eslint/no-unused-vars': [
+            'warn',
+            {
+                argsIgnorePattern: '^_',
+                varsIgnorePattern: '^_',
+            },
+        ], //不允许 定义未使用的变量
+        '@typescript-eslint/explicit-module-boundary-types': 'off', // 关闭显式导出类型检查
+        '@typescript-eslint/no-explicit-any': 'off', // any类型警告
+        '@typescript-eslint/ban-ts-comment': 'warn', // 禁止使用@ts-ignore等注释
+
+        // Prettier规则（通过eslint-plugin-prettier关联）
+        'prettier/prettier': 'error',
+
+        // import规则
+        'import/order': [
+            'warn',
+            {
+                groups: [['builtin', 'external'], 'internal', ['parent', 'sibling', 'index']],
+                'newlines-between': 'always',
+            },
+        ],
     },
 };

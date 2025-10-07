@@ -2,10 +2,10 @@ import axios from '@/utils/axios';
 
 //统一管理接口
 enum api {
-    env = '/login/env',
-    account_login = '/login/account',
-    refresh = '/login/refresh',
-    login_out = '/login/login_out',
+	env = '/login/env',
+	account_login = '/login/account',
+	refresh = '/login/refresh',
+	login_out = '/login/login_out',
 }
 
 import { LoginForm } from '@/types/login';

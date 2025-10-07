@@ -3,23 +3,23 @@
 
 //搜索相关
 .search {
-    margin-bottom: 20px;
+	margin-bottom: 20px;
 
-    .search-row {
-        display: flex;
-        align-items: center;
+	.search-row {
+		display: flex;
+		align-items: center;
 
-        .search-label {
-            line-height: 36px;
-            margin-right: 10px;
-            font-size: 14px;
-        }
-    }
+		.search-label {
+			line-height: 36px;
+			margin-right: 10px;
+			font-size: 14px;
+		}
+	}
 }
 
 //el-card 头部
 .el-card__header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
 }

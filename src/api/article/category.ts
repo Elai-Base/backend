@@ -1,8 +1,8 @@
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
-    tree = '/article/category/tree',
-    uri = '/article/category',
+	tree = '/article/category/tree',
+	uri = '/article/category',
 }
 //暴露请求函数
 export const reqArticleCategoryTreeList = () => axios.get(api.tree);

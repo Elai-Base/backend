@@ -2,10 +2,10 @@ import { RoleDeleteForm, RoleForm, RoleSearch } from '@/types/set/role';
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
-    page = '/system/roles',
-    all = '/system/roles/all',
+	page = '/system/roles',
+	all = '/system/roles/all',
 
-    uri = '/system/role',
+	uri = '/system/role',
 }
 //暴露请求函数
 export const reqRolePageList = (data: RoleSearch) => axios.get(api.page, { params: data });

@@ -19,14 +19,14 @@ import '@/assets/iconfont/iconfont.css';
 
 // 引入路由
 import router from './router';
-import pinia from './stores/index.ts';
+import pinia from './stores/index';
 
 // 引入pinia
 const app = createApp(App);
 app.use(router);
 app.use(pinia);
 app.use(ElementPlus, {
-    locale: zhCn,
+	locale: zhCn,
 });
 //use全局组件
 app.use(globalComponent);
