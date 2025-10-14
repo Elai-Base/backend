@@ -7,7 +7,6 @@ import {
 	reqMenuUpdate,
 	reqMenuDelete,
 } from '@/api/set/menu';
-import storage from '@/utils/storage';
 import router from '@/router';
 import { ref } from 'vue';
 import { Breadcrumb, Menu, MenuForm } from '@/types/set/menu';
@@ -22,20 +21,13 @@ let useSetMenuStore = defineStore('set-menu', () => {
 		name: '',
 		uri: null,
 		icon: '',
+		icon_size: '16px',
 		weight: 0,
 		children: [],
 	});
 
 	const loading = ref<boolean>(false);
 
-	function setBreadcrumbFunc(breadcrumb: any) {
-		breadcrumb.value = breadcrumb;
-		storage.set('breadcrumb', breadcrumb);
-	}
-	function getBreadcrumbFunc() {
-		breadcrumb.value = storage.get('breadcrumb');
-		return breadcrumb.value;
-	}
 	async function treeFunc() {
 		loading.value = true;
 		const response: any = await reqMenuTreeList();
@@ -93,8 +85,6 @@ let useSetMenuStore = defineStore('set-menu', () => {
 	return {
 		loading,
 		breadcrumb,
-		setBreadcrumbFunc,
-		getBreadcrumbFunc,
 
 		tree,
 		treeFunc,

@@ -1,0 +1,17 @@
+:root[data-theme='dark'] {
+	// 头部
+	--th-header-bg: #1d2124;
+	--th-header-color: #fff;
+
+	// 侧边栏
+	--th-side-bg: #1d2124;
+	--th-menu-icon-color: #ffffff;
+	--th-menu-name-color: #ffffff;
+	--th-menu-arrow-color: #ffffff;
+	--th-menu-active-bg: linear-gradient(
+		90deg,
+		rgba(255, 255, 255, 0.15) 0%,
+		rgba(74, 144, 226, 0) 100%
+	);
+	--th-menu-active-color: #fff;
+}

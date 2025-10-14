@@ -12,7 +12,10 @@ defineProps({
 		type: String,
 		default: 'icon-',
 	},
-	name: String,
+	name: {
+		type: String,
+		default: '',
+	},
 	color: {
 		type: String,
 		default: '',

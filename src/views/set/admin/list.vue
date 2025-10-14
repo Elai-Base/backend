@@ -1,25 +1,41 @@
 <template>
 	<el-card>
 		<div class="search">
-			<el-row>
-				<el-col
-					:span="2"
-					:offset="22"
+			<div class="condition">
+				<el-input
+					v-model="adminStore.search.keyword"
+					placeholder="请输入账号名称/电话"
+					style="width: 240px"
+				></el-input>
+			</div>
+			<div class="operation">
+				<el-button
+					type="success"
+					@click="search()"
 				>
-					<el-button
-						type="primary"
-						@click="goPush(null)"
-						>添加</el-button
-					>
-				</el-col>
-			</el-row>
+					搜索
+				</el-button>
+				<el-button
+					type="primary"
+					@click="goAdd()"
+				>
+					添加
+				</el-button>
+			</div>
 		</div>
+	</el-card>
+	<el-card class="mt10">
 		<el-table
 			:data="adminStore.pageData.list"
 			row-key="id"
 			:border="true"
 			v-loading="adminStore.loading"
 		>
+			<el-table-column
+				prop="id"
+				label="ID"
+				width="60"
+			></el-table-column>
 			<el-table-column label="账号名称">
 				<template #default="scope">
 					{{ scope.row.name }}
@@ -42,9 +58,10 @@
 				<template #default="scope">
 					<el-button
 						size="small"
-						@click="goPush(scope.row)"
-						>编辑</el-button
+						@click="goPush(scope.row.id)"
 					>
+						编辑
+					</el-button>
 					<el-button
 						v-if="scope.row.id != 1"
 						size="small"
@@ -73,17 +90,28 @@ onMounted(async () => {
 	await adminStore.pageFunc();
 });
 
-function paginationData(val: { page: number; page_size: number }) {
+const search = () => {
+	adminStore.search.current_page = 1;
+	adminStore.pageFunc();
+};
+
+const paginationData = (val: { page: number; page_size: number }) => {
 	adminStore.search.current_page = val.page;
 	adminStore.search.page_size = val.page_size;
 	adminStore.pageFunc();
-}
+};
 
-const goPush = (row: any) => {
+const goAdd = () => {
+	router.push({
+		path: '/set/admin/push',
+	});
+};
+
+const goPush = (id: number) => {
 	router.push({
 		path: '/set/admin/push',
 		query: {
-			id: row ? row.id : 0,
+			id: id,
 		},
 	});
 };

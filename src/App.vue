@@ -3,16 +3,19 @@
 		class="page"
 		v-if="loginStore.token"
 	>
-		<!-- 左侧菜单 -->
-		<Side></Side>
+		<!-- 头部导航 -->
+		<Header></Header>
 
-		<div class="page-right">
-			<!-- 顶面导航 -->
-			<Header></Header>
-			<div class="page-content">
-				<router-view></router-view>
+		<div class="page-main">
+			<!-- 左侧菜单 -->
+			<Side></Side>
+
+			<div class="page-right">
+				<div class="page-content">
+					<router-view></router-view>
+				</div>
+				<Footer></Footer>
 			</div>
-			<Footer></Footer>
 		</div>
 	</div>
 	<div
@@ -41,21 +44,24 @@ if (!loginStore.token) {
 .page {
 	width: 100%;
 	height: 100vh;
-	background: #f5f6f7;
-	display: flex;
+	background: var(--th-body-bg-color);
 
-	.page-right {
-		width: calc(100% - 240px);
-	}
+	.page-main {
+		display: flex;
+		height: calc(100vh - var(--th-header-height));
 
-	.page-header {
-		width: 100%;
-		height: 60px;
+		.page-left {
+			width: var(--th-side-width);
+		}
+		.page-right {
+			height: 100%;
+			overflow-y: scroll;
+			width: calc(100% - var(--th-side-width));
+		}
 	}
 
 	.page-content {
 		padding: 10px;
-		box-sizing: border-box;
 	}
 }
 </style>

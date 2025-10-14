@@ -10,7 +10,7 @@
 		>
 			<el-form-item label="父级菜单">
 				<el-select
-					class="el-col-12"
+					class="el-col-18"
 					v-model="form.parent_id"
 					clearable
 					filterable
@@ -33,28 +33,35 @@
 				class="required"
 			>
 				<el-input
-					class="el-col-12"
+					class="el-col-18"
 					v-model="form.name"
 					placeholder="请输入菜单名称"
 				></el-input>
 			</el-form-item>
 			<el-form-item label="菜单地址">
 				<el-input
-					class="el-col-12"
+					class="el-col-18"
 					v-model="form.uri"
 					placeholder="请输入菜单地址"
 				></el-input>
 			</el-form-item>
-			<el-form-item label="ICON">
+			<el-form-item label="iconfont图标">
 				<el-input
-					class="el-col-12"
+					class="el-col-18"
 					v-model="form.icon"
 					placeholder="请输入iconfont的class名称,参考iconfont"
 				></el-input>
 			</el-form-item>
+			<el-form-item label="图标大小">
+				<el-input
+					class="el-col-18"
+					v-model="form.icon_size"
+					placeholder="请输入iconfont的字体大小,单位px"
+				></el-input>
+			</el-form-item>
 			<el-form-item label="权重">
 				<el-input
-					class="el-col-12"
+					class="el-col-18"
 					v-model="form.weight"
 					placeholder="请输入权重，越大越靠前"
 					type="number"
@@ -65,8 +72,9 @@
 				<el-button
 					type="primary"
 					@click="update()"
-					>提交</el-button
 				>
+					提交
+				</el-button>
 			</el-form-item>
 		</el-form>
 	</el-card>
@@ -81,10 +89,11 @@ import { MenuForm } from '@/types/set/menu';
 const menuStore = useMenuStore();
 const form = ref<MenuForm>({
 	id: 0,
-	parent_id: null,
+	parent_id: 0,
 	name: '',
 	uri: '',
 	icon: '',
+	icon_size: '16px',
 	weight: 0,
 });
 

@@ -132,6 +132,7 @@ let useSetAdminStore = defineStore('set-admin', () => {
 		loginInfoFunc,
 
 		search,
+
 		pageData,
 		pageFunc,
 

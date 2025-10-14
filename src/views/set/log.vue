@@ -1,47 +1,44 @@
 <template>
 	<el-card>
 		<div class="search">
-			<el-row>
-				<el-col :span="6">
+			<div class="condition">
+				<div class="group">
 					<el-input
 						v-model="logStore.search.keyword"
 						placeholder="请输入行为/操作地址/IP进行搜索"
+						style="min-width: 240px"
 					></el-input>
-				</el-col>
-				<el-col
-					:span="6"
-					:offset="1"
-				>
-					<div class="search-row">
-						<div class="search-label">操作者</div>
-						<el-select
-							style="width: 70%"
-							v-model="logStore.search.admin_id"
-							clearable
-							filterable
-							placeholder="请选择"
-						>
-							<el-option
-								v-for="item in adminStore.all"
-								:key="item.id"
-								:label="item.name + '(' + item.id + ')'"
-								:value="item.id"
-							/>
-						</el-select>
-					</div>
-				</el-col>
-				<el-col
-					:span="2"
-					:offset="1"
-				>
-					<el-button
-						type="success"
-						@click="search()"
-						>搜索</el-button
+				</div>
+
+				<div class="group">
+					<div class="label">操作者</div>
+					<el-select
+						style="width: 180px"
+						v-model="logStore.search.admin_id"
+						clearable
+						filterable
+						placeholder="请选择"
 					>
-				</el-col>
-			</el-row>
+						<el-option
+							v-for="item in adminStore.all"
+							:key="item.id"
+							:label="item.name + '(' + item.id + ')'"
+							:value="item.id"
+						/>
+					</el-select>
+				</div>
+			</div>
+			<div class="operation">
+				<el-button
+					type="success"
+					@click="search()"
+				>
+					搜索
+				</el-button>
+			</div>
 		</div>
+	</el-card>
+	<el-card class="mt10">
 		<el-table
 			:data="logStore.pageData.list"
 			row-key="id"

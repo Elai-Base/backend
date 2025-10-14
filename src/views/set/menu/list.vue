@@ -1,19 +1,18 @@
 <template>
 	<el-card>
 		<div class="search">
-			<el-row>
-				<el-col
-					:span="2"
-					:offset="22"
+			<div class="condition"></div>
+			<div class="operation">
+				<el-button
+					type="primary"
+					@click="goAdd()"
 				>
-					<el-button
-						type="primary"
-						@click="goPush(null)"
-						>添加</el-button
-					>
-				</el-col>
-			</el-row>
+					添加
+				</el-button>
+			</div>
 		</div>
+	</el-card>
+	<el-card class="mt10">
 		<el-table
 			:data="menuStore.tree"
 			row-key="id"
@@ -36,12 +35,16 @@
 			></el-table-column>
 			<el-table-column label="图标">
 				<template #default="scope">
-					<span
-						v-if="scope.row.icon"
-						class="iconfont"
-						:class="scope.row.icon"
-					></span>
+					<IconFont
+						:name="scope.row.icon"
+						:fontSize="scope.row.icon_size"
+					></IconFont>
 				</template>
+			</el-table-column>
+			<el-table-column
+				label="图标大小"
+				prop="icon_size"
+			>
 			</el-table-column>
 			<el-table-column
 				label="操作"
@@ -50,9 +53,10 @@
 				<template #default="scope">
 					<el-button
 						size="small"
-						@click="goPush(scope.row)"
-						>编辑</el-button
+						@click="goPush(scope.row.id)"
 					>
+						编辑
+					</el-button>
 					<el-button
 						size="small"
 						type="danger"
@@ -77,12 +81,18 @@ onMounted(() => {
 	menuStore.treeFunc();
 });
 
-function goPush(row: any) {
+const goAdd = () => {
+	router.push({
+		path: '/set/menu/push',
+	});
+};
+
+const goPush = (id: number) => {
 	router.push({
 		path: '/set/menu/push',
 		query: {
-			id: row ? row.id : 0,
+			id: id,
 		},
 	});
-}
+};
 </script>

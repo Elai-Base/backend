@@ -1,20 +1,18 @@
 <template>
 	<el-card>
 		<div class="search">
-			<el-row>
-				<el-col
-					:span="2"
-					:offset="22"
+			<div class="condition"></div>
+			<div class="operation">
+				<el-button
+					type="primary"
+					@click="goAdd()"
 				>
-					<el-button
-						size="small"
-						type="primary"
-						@click="goPush(null)"
-						>添加</el-button
-					>
-				</el-col>
-			</el-row>
+					添加
+				</el-button>
+			</div>
 		</div>
+	</el-card>
+	<el-card class="mt10">
 		<el-table
 			:data="permissionStore.tree"
 			row-key="id"
@@ -69,21 +67,27 @@ onMounted(async () => {
 	await permissionStore.treeFunc();
 });
 
-function goPush(row: any) {
+const goAdd = () => {
+	router.push({
+		path: '/set/permission/push',
+	});
+};
+
+const goPush = (id: number) => {
 	router.push({
 		path: '/set/permission/push',
 		query: {
-			id: row ? row.id : 0,
+			id: id,
 		},
 	});
-}
+};
 
-function urlFilter(url: string) {
+const urlFilter = (url: string) => {
 	//替换所有的换行符
 	if (url) {
 		url = url.replace(/\r\n/g, '<br>');
 		url = url.replace(/\n/g, '<br>');
 	}
 	return url;
-}
+};
 </script>

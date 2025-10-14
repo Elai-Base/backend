@@ -1,11 +1,12 @@
 <template>
 	<div class="page-header">
-		<div class="header-left">
-			<el-breadcrumb separator-class="el-icon-arrow-right">
+		<div class="header-name">管理后台</div>
+		<div class="header-breadcrumb">
+			<el-breadcrumb separator=">">
 				<el-breadcrumb-item
 					v-for="item in menuStore.breadcrumb"
 					:key="item.name"
-					:to="{ path: item.path }"
+					:to="item.path"
 				>
 					{{ item.name }}
 				</el-breadcrumb-item>
@@ -13,56 +14,80 @@
 		</div>
 
 		<div class="header-right">
-			<!-- <div class="color-change-box">
-				<el-button class="btn" @click="changeBackground()">
-					<img
-						v-if="backgroundState == 'light'"
-						src="@/assets/images/sun.png"
-					/>
-					<img v-else src="@/assets/images/moon.png" alt="" />
-					<span>{{
-						backgroundState == "light" ? "浅色模式" : "深色模式"
-					}}</span>
-				</el-button>
-			</div> -->
 			<div class="account-box">
 				{{ adminStore.loginInfo.name }}({{ adminStore.loginInfo.role_info.name }})
 			</div>
 
-			<div class="message-box">
-				<span class="iconfont icon-message-notice"></span>
-				<!-- <el-badge v-if="unReadNum > 0" :value="unReadNum" type="warning"
-					style="margin-left: -10px; margin-top: -10px">
-				</el-badge> -->
-			</div>
+			<div class="message-box"></div>
 
 			<div class="set-box">
 				<el-dropdown>
-					<span class="iconfont icon-set"></span>
+					<IconFont
+						name="set"
+						color="var(--th-header-color)"
+						fontSize="24px"
+					></IconFont>
+
 					<template #dropdown>
 						<el-dropdown-menu>
+							<el-dropdown-item @click="showTheme()">设置主题</el-dropdown-item>
 							<el-dropdown-item @click="loginOut()">退出登录</el-dropdown-item>
 						</el-dropdown-menu>
 					</template>
 				</el-dropdown>
 			</div>
 		</div>
+
+		<!-- 主题选择弹窗 -->
+		<Theme
+			v-model:config="themeConfig"
+			@update:config="handleUpdateConfig"
+		></Theme>
 	</div>
 </template>
 
 <script setup lang="ts">
+import Theme from '@/components/dialog/Theme.vue';
 import useSetAdminStore from '@/stores/set/admin';
 const adminStore = useSetAdminStore();
 adminStore.loginInfoFunc();
 
 import useMenuStore from '@/stores/set/menu';
 const menuStore = useMenuStore();
-menuStore.getBreadcrumbFunc();
 
 import useLoginStore from '@/stores/login';
+import { onMounted, ref } from 'vue';
+import storage from '@/utils/storage';
+import IconFont from './global/IconFont.vue';
 const loginStore = useLoginStore();
 const loginOut = () => {
 	loginStore.loginOutFunc();
+};
+
+// 设置主题
+const themeConfig = ref({
+	theme: 'default',
+	show: false,
+	title: '切换主题',
+});
+onMounted(() => {
+	const theme = storage.get('theme');
+	themeConfig.value.theme = theme || 'default';
+	setTheme();
+});
+const setTheme = () => {
+	document.documentElement.setAttribute('data-theme', themeConfig.value.theme);
+};
+
+const handleUpdateConfig = (val: typeof themeConfig.value) => {
+	themeConfig.value = val;
+	storage.set('theme', val.theme);
+	setTheme();
+};
+
+// 显示主题选择弹窗
+const showTheme = () => {
+	themeConfig.value.show = true;
 };
 </script>
 
@@ -70,15 +95,32 @@ const loginOut = () => {
 .page-header {
 	display: flex;
 	align-items: center;
-	height: 70px;
-	line-height: 70px;
-	padding: 10px;
-	box-sizing: border-box;
 
-	background: rgba(255, 255, 255, 1);
+	height: var(--th-header-height);
+	line-height: var(--th-header-line-height);
+
+	background: var(--th-header-bg);
+	color: var(--th-header-color);
+
+	border-bottom: 1px solid #eee;
 	box-shadow: 0px 4px 4px rgba(43, 45, 55, 0.01);
 
+	.header-name {
+		width: var(--th-side-width);
+		text-align: center;
+		font-size: 18px;
+		font-weight: bold;
+	}
+
+	.header-breadcrumb {
+		margin-left: 10px;
+		:deep(.el-breadcrumb__inner) {
+			color: var(--th-header-color);
+		}
+	}
+
 	.header-right {
+		padding: 10px;
 		margin-left: auto;
 		display: flex;
 		align-items: center;

@@ -1,5 +1,9 @@
 import { createApp } from 'vue';
 import App from './App.vue';
+
+// 引入全局样式
+import '@/styles/common.scss';
+
 // 引入ElementPlus
 import ElementPlus from 'element-plus';
 import 'element-plus/dist/index.css';
@@ -10,9 +14,6 @@ import zhCn from 'element-plus/dist/locale/zh-cn.mjs';
 
 // 引入全局组件
 import globalComponent from '@/components/global';
-
-// 引入全局样式
-import '@/assets/css/index.scss';
 
 // 引入iconfont
 import '@/assets/iconfont/iconfont.css';

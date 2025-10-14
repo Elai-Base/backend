@@ -9,15 +9,15 @@ export type LoginEnv = {
 };
 
 // 登录表单
-export interface LoginForm {
+export type LoginForm = {
 	username: string;
 	password: string;
 	type: number;
 	captcha: string;
-}
+};
 
 // 登录响应
-export interface LoginRes {
+export type LoginRes = {
 	token: string;
 	refresh_token: string;
-}
+};

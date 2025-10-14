@@ -16,20 +16,21 @@ defineProps({
 		default: 0,
 	},
 });
+// 注册 向父组件 发送分页数据事件
 let $emit = defineEmits(['paginationData']);
 const pagination = ref({
 	page: 1,
 	page_size: 10,
 });
 
-function pageSizeChange(e: number) {
+const pageSizeChange = (e: number) => {
 	pagination.value.page_size = e;
 	$emit('paginationData', pagination.value);
-}
-function pageChange(e: number) {
+};
+const pageChange = (e: number) => {
 	pagination.value.page = e;
 	$emit('paginationData', pagination.value);
-}
+};
 </script>
 <style lang="scss" scoped>
 .el-pagination {

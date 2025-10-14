@@ -7,7 +7,7 @@ export type Admin = {
 	password: string;
 	phone: number;
 	role_id: number;
-	role_info?: Role;
+	role_info: Role;
 	created_at: string;
 };
 

@@ -1,13 +1,14 @@
 // 菜单
-export interface Menu {
+export type Menu = {
 	id: number;
 	parent_id: number;
 	name: string;
 	uri: string | null;
 	icon: string | null;
+	icon_size: string | null;
 	weight: number;
 	children: Menu[];
-}
+};
 
 export type Breadcrumb = {
 	name: string;
@@ -16,10 +17,11 @@ export type Breadcrumb = {
 
 export type MenuForm = {
 	id?: number;
-	parent_id: number | null;
+	parent_id: number;
 	name: string;
 	uri: string | null;
 	icon: string | null;
+	icon_size: string | null;
 	weight: number;
 };
 

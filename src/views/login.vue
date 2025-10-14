@@ -41,7 +41,6 @@
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { FormRules } from 'element-plus';
 import useLoginStore from '@/stores/login';
 import { LoginForm } from '@/types/login';
 
