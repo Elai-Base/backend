@@ -1,0 +1,1 @@
+import{_ as o,B as t,y as r,q as c}from"./index-4FEs3rAY.js";const s={};function n(_,a){const e=t("router-view");return c(),r(e)}const m=o(s,[["render",n],["__file","/Users/zouyl/code/my/base/backend/src/views/template.vue"]]);export{m as default};
