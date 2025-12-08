@@ -1,1 +1,0 @@
-import{_ as s,h as o,i as a,q as c}from"./index-4FEs3rAY.js";const t={},r={class:"page-404"};function _(n,e){return c(),o("div",r,[...e[0]||(e[0]=[a("p",null,"404",-1)])])}const l=s(t,[["render",_],["__scopeId","data-v-52711040"],["__file","/Users/zouyl/code/my/base/backend/src/views/404.vue"]]);export{l as default};
