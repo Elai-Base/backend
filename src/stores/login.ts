@@ -8,6 +8,8 @@ import { LoginEnv, LoginForm, LoginRes } from '@/types/login';
 import { ref } from 'vue';
 
 let useLoginStore = defineStore('login', () => {
+	const loading = ref<boolean>(false);
+
 	const token = ref<string>('');
 	token.value = storage.get('token');
 
@@ -22,8 +24,6 @@ let useLoginStore = defineStore('login', () => {
 		agent: '',
 		ip: '',
 	});
-
-	const loading = ref<boolean>(false);
 
 	async function envConfigFunc() {
 		const response: any = await reqEnv();
@@ -55,6 +55,7 @@ let useLoginStore = defineStore('login', () => {
 			}, 1000);
 		}
 	}
+
 	async function loginOutFunc() {
 		const response: any = await reqLoginOut();
 		if (response.code == 0) {
@@ -65,11 +66,13 @@ let useLoginStore = defineStore('login', () => {
 	}
 
 	return {
+		loading,
 		token,
 		refreshToken,
+
 		env,
-		loading,
 		envConfigFunc,
+
 		accountLoginFunc,
 		loginOutFunc,
 	};

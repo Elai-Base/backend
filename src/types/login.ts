@@ -12,8 +12,12 @@ export type LoginEnv = {
 export type LoginForm = {
 	username: string;
 	password: string;
-	type: number;
-	captcha: string;
+	captcha: {
+		type: string;
+		biz: string;
+		key: string;
+		token: string;
+	};
 };
 
 // 登录响应

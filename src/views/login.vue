@@ -5,7 +5,6 @@
 				<div class="login-title">
 					<div class="title">欢迎登录</div>
 				</div>
-
 				<el-form-item>
 					<el-input
 						placeholder="请输入账号"
@@ -26,7 +25,7 @@
 					<el-button
 						class="btn-login"
 						v-loading="loginStore.loading"
-						@click="login"
+						@click="login()"
 					>
 						登录
 					</el-button>
@@ -36,24 +35,52 @@
 				</el-form-item>
 			</el-form>
 		</div>
+		<RandomCaptcha
+			@confirm="
+				(res) => {
+					// 设置验证码结果
+					formData.captcha = res;
+					login();
+				}
+			"
+		></RandomCaptcha>
 	</div>
 </template>
 
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
 import useLoginStore from '@/stores/login';
+import useCaptchaStore from '@/stores/catpcha';
 import { LoginForm } from '@/types/login';
-
+import RandomCaptcha from '@/components/Captcha/rand.vue';
+import { ElNotification } from 'element-plus';
 const loginStore = useLoginStore();
 
 const formData = ref<LoginForm>({
 	username: '',
 	password: '',
-	type: 0,
-	captcha: '',
+	captcha: {
+		type: '',
+		key: '',
+		biz: 'login',
+		token: '',
+	},
 });
+const captchaStore = useCaptchaStore();
 
 const login = () => {
+	// 校验账号密码
+	if (!formData.value.username || !formData.value.password) {
+		ElNotification.error('请输入账号密码');
+		return;
+	}
+	// 校验验证码
+	if (!formData.value.captcha.token) {
+		captchaStore.show = true;
+		captchaStore.uuid = formData.value.username;
+		captchaStore.biz = 'login';
+		return;
+	}
 	loginStore.accountLoginFunc(formData.value);
 };
 onMounted(() => {
