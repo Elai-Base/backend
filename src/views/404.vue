@@ -1,6 +1,7 @@
 <template>
 	<div class="page-404">
-		<p>404</p>
+		<h2>404</h2>
+		<p>页面不存在</p>
 	</div>
 </template>
 
@@ -8,10 +9,16 @@
 
 <style lang="scss" scoped>
 .page-404 {
-	p {
-		font-size: 300px;
+	h2 {
+		font-size: 100px;
+		font-weight: bold;
 		text-align: center;
-		margin-top: 20%;
+		color: #ccc;
+		margin-top: 20vh;
+	}
+	p {
+		font-size: 30px;
+		text-align: center;
 		color: #ccc;
 	}
 }

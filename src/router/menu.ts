@@ -62,7 +62,7 @@ const routes = [
 					{
 						path: 'push',
 						name: '/set/menu/push',
-						component: () => import('@/views/set/menu/push.vue'),
+						component: () => import('@/views/set/menu/pushDialog.vue'),
 						meta: {
 							title: '编辑菜单',
 							level: 3,
@@ -91,7 +91,7 @@ const routes = [
 					{
 						path: 'push',
 						name: '/set/permission/push',
-						component: () => import('@/views/set/permission/push.vue'),
+						component: () => import('@/views/set/permission/pushDialog.vue'),
 						meta: {
 							title: '编辑权限',
 							level: 3,
@@ -120,7 +120,7 @@ const routes = [
 					{
 						path: 'push',
 						name: '/set/role/push',
-						component: () => import('@/views/set/role/push.vue'),
+						component: () => import('@/views/set/role/pushDialog.vue'),
 						meta: {
 							title: '编辑角色',
 							level: 3,
@@ -149,7 +149,7 @@ const routes = [
 					{
 						path: 'push',
 						name: '/set/admin/push',
-						component: () => import('@/views/set/admin/push.vue'),
+						component: () => import('@/views/set/admin/pushDialog.vue'),
 						meta: {
 							title: '编辑管理员',
 							level: 3,

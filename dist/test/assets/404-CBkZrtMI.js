@@ -1,0 +1,1 @@
+import{_ as c,g as t,h as s,q as o}from"./index-Cw_Jos6R.js";const a={},n={class:"page-404"};function r(_,e){return o(),t("div",n,[...e[0]||(e[0]=[s("h2",null,"404",-1),s("p",null,"页面不存在",-1)])])}const d=c(a,[["render",r],["__scopeId","data-v-81bcecc3"]]);export{d as default};

@@ -15,6 +15,7 @@ import { ref } from 'vue';
 import { Admin, AdminForm, AdminPageList, AdminSearch } from '@/types/set/admin';
 let useSetAdminStore = defineStore('set-admin', () => {
 	const loading = ref<boolean>(false);
+	const showDialog = ref<boolean>(false);
 
 	const loginInfo = ref<Admin>({
 		id: 0,
@@ -96,7 +97,9 @@ let useSetAdminStore = defineStore('set-admin', () => {
 		const response: any = await reqAdminCreate(data);
 		if (response.code == 0) {
 			ElNotification.success('创建成功');
-			router.go(-1);
+			showDialog.value = false;
+			// 刷新列表
+			pageFunc();
 		}
 	}
 
@@ -104,7 +107,9 @@ let useSetAdminStore = defineStore('set-admin', () => {
 		const response: any = await reqAdminUpdate(data);
 		if (response.code == 0) {
 			ElNotification.success('更新成功');
-			router.go(-1);
+			showDialog.value = false;
+			// 刷新列表
+			pageFunc();
 		}
 	}
 	async function deleteFunc(id: number) {
@@ -127,6 +132,7 @@ let useSetAdminStore = defineStore('set-admin', () => {
 
 	return {
 		loading,
+		showDialog,
 
 		loginInfo,
 		loginInfoFunc,

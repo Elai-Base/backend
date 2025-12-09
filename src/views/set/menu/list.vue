@@ -5,7 +5,7 @@
 			<div class="operation">
 				<el-button
 					type="primary"
-					@click="goAdd()"
+					@click="showAdd()"
 				>
 					添加
 				</el-button>
@@ -53,7 +53,7 @@
 				<template #default="scope">
 					<el-button
 						size="small"
-						@click="goPush(scope.row.id)"
+						@click="showEdit(scope.row.id)"
 					>
 						编辑
 					</el-button>
@@ -68,31 +68,32 @@
 			</el-table-column>
 		</el-table>
 	</el-card>
+	<PushDialog v-model:config="pushConfig"></PushDialog>
 </template>
 
 <script lang="ts" setup>
+import { onMounted, ref } from 'vue';
+import PushDialog from './pushDialog.vue';
 import useMenuStore from '@/stores/set/menu';
 const menuStore = useMenuStore();
-
-import router from '@/router';
-import { onMounted } from 'vue';
 
 onMounted(() => {
 	menuStore.treeFunc();
 });
 
-const goAdd = () => {
-	router.push({
-		path: '/set/menu/push',
-	});
+const pushConfig = ref({
+	title: '',
+	id: 0,
+});
+const showAdd = () => {
+	menuStore.showDialog = true;
+	pushConfig.value.title = '新增';
+	pushConfig.value.id = 0;
 };
 
-const goPush = (id: number) => {
-	router.push({
-		path: '/set/menu/push',
-		query: {
-			id: id,
-		},
-	});
+const showEdit = (id: number) => {
+	menuStore.showDialog = true;
+	pushConfig.value.title = '编辑';
+	pushConfig.value.id = id;
 };
 </script>

@@ -17,7 +17,7 @@
 				</el-button>
 				<el-button
 					type="primary"
-					@click="goAdd()"
+					@click="showAdd()"
 				>
 					添加
 				</el-button>
@@ -58,7 +58,7 @@
 				<template #default="scope">
 					<el-button
 						size="small"
-						@click="goPush(scope.row.id)"
+						@click="showEdit(scope.row.id)"
 					>
 						编辑
 					</el-button>
@@ -77,12 +77,13 @@
 			:total="adminStore.pageData.total"
 			@paginationData="paginationData"
 		></Pagination>
+		<PushDialog v-model:config="pushConfig"></PushDialog>
 	</el-card>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import router from '@/router';
+import { onMounted, ref } from 'vue';
+import PushDialog from '@/views/set/admin/pushDialog.vue';
 import useAdminStore from '@/stores/set/admin';
 const adminStore = useAdminStore();
 
@@ -101,18 +102,20 @@ const paginationData = (val: { page: number; page_size: number }) => {
 	adminStore.pageFunc();
 };
 
-const goAdd = () => {
-	router.push({
-		path: '/set/admin/push',
-	});
+const pushConfig = ref({
+	title: '',
+	id: 0,
+});
+
+const showAdd = () => {
+	adminStore.showDialog = true;
+	pushConfig.value.title = '新增';
+	pushConfig.value.id = 0;
 };
 
-const goPush = (id: number) => {
-	router.push({
-		path: '/set/admin/push',
-		query: {
-			id: id,
-		},
-	});
+const showEdit = (id: number) => {
+	adminStore.showDialog = true;
+	pushConfig.value.title = '编辑';
+	pushConfig.value.id = id;
 };
 </script>

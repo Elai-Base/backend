@@ -19,7 +19,7 @@
 				</el-button>
 				<el-button
 					type="primary"
-					@click="goAdd()"
+					@click="showAdd()"
 				>
 					添加
 				</el-button>
@@ -50,7 +50,7 @@
 				<template #default="scope">
 					<el-button
 						size="small"
-						@click="goPush(scope.row.id)"
+						@click="showEdit(scope.row.id)"
 					>
 						编辑
 					</el-button>
@@ -70,11 +70,12 @@
 			@paginationData="paginationData"
 		></Pagination>
 	</el-card>
+	<PushDialog v-model:config="pushConfig"></PushDialog>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import router from '@/router';
+import { onMounted, ref } from 'vue';
+import PushDialog from '@/views/set/role/pushDialog.vue';
 import useRoleStore from '@/stores/set/role';
 const roleStore = useRoleStore();
 
@@ -93,17 +94,18 @@ const paginationData = (val: any) => {
 	roleStore.pageFunc();
 };
 
-const goAdd = () => {
-	router.push({
-		path: '/set/role/push',
-	});
+const pushConfig = ref({
+	title: '',
+	id: 0,
+});
+const showAdd = () => {
+	roleStore.showDialog = true;
+	pushConfig.value.title = '新增';
+	pushConfig.value.id = 0;
 };
-const goPush = (id: number) => {
-	router.push({
-		path: '/set/role/push',
-		query: {
-			id: id,
-		},
-	});
+const showEdit = (id: number) => {
+	roleStore.showDialog = true;
+	pushConfig.value.title = '编辑';
+	pushConfig.value.id = id;
 };
 </script>

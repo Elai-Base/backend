@@ -12,6 +12,8 @@ import { ref } from 'vue';
 import { Breadcrumb, Menu, MenuForm } from '@/types/set/menu';
 
 let useSetMenuStore = defineStore('set-menu', () => {
+	const loading = ref<boolean>(false);
+	const showDialog = ref<boolean>(false);
 	const breadcrumb = ref<Breadcrumb[] | null | undefined>([]);
 	const tree = ref<Menu[]>([]);
 
@@ -25,8 +27,6 @@ let useSetMenuStore = defineStore('set-menu', () => {
 		weight: 0,
 		children: [],
 	});
-
-	const loading = ref<boolean>(false);
 
 	async function treeFunc() {
 		loading.value = true;
@@ -50,7 +50,8 @@ let useSetMenuStore = defineStore('set-menu', () => {
 		loading.value = false;
 		if (response.code == 0) {
 			ElNotification.success('创建成功');
-			router.go(-1);
+			showDialog.value = false;
+			treeFunc();
 		}
 	}
 	async function updateFunc(data: any) {
@@ -59,7 +60,8 @@ let useSetMenuStore = defineStore('set-menu', () => {
 		loading.value = false;
 		if (response.code == 0) {
 			ElNotification.success('更新成功');
-			router.go(-1);
+			showDialog.value = false;
+			treeFunc();
 		}
 	}
 	async function deleteFunc(id: number) {
@@ -84,6 +86,7 @@ let useSetMenuStore = defineStore('set-menu', () => {
 
 	return {
 		loading,
+		showDialog,
 		breadcrumb,
 
 		tree,

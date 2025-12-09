@@ -52,7 +52,7 @@ import { onMounted, ref } from 'vue';
 import useLoginStore from '@/stores/login';
 import useCaptchaStore from '@/stores/catpcha';
 import { LoginForm } from '@/types/login';
-import RandomCaptcha from '@/components/Captcha/rand.vue';
+import RandomCaptcha from '@/components/captcha/rand.vue';
 import { ElNotification } from 'element-plus';
 const loginStore = useLoginStore();
 
@@ -128,7 +128,7 @@ onMounted(() => {
 
 			.btn-login {
 				width: 100%;
-				background-color: rgba(0, 84, 254, 1);
+				background-color: #0054fe;
 				color: #fff;
 				height: 50px;
 				line-height: 50px;

@@ -12,7 +12,7 @@ import { Menu, Permission, PermissionForm } from '@/types/set/permission';
 import { ref } from 'vue';
 let useSetPermissionStore = defineStore('set-permission', () => {
 	const loading = ref<boolean>(false);
-
+	const showDialog = ref<boolean>(false);
 	const tree = ref<Menu[]>([]);
 
 	const info = ref<Permission>({
@@ -45,7 +45,8 @@ let useSetPermissionStore = defineStore('set-permission', () => {
 		loading.value = false;
 		if (response.code == 0) {
 			ElNotification.success('创建成功');
-			router.go(-1);
+			showDialog.value = false;
+			treeFunc();
 		}
 	}
 	async function updateFunc(data: PermissionForm) {
@@ -54,7 +55,8 @@ let useSetPermissionStore = defineStore('set-permission', () => {
 		loading.value = false;
 		if (response.code == 0) {
 			ElNotification.success('更新成功');
-			router.go(-1);
+			showDialog.value = false;
+			treeFunc();
 		}
 	}
 	async function deleteFunc(id: number) {
@@ -77,6 +79,8 @@ let useSetPermissionStore = defineStore('set-permission', () => {
 	}
 	return {
 		loading,
+		showDialog,
+
 		tree,
 		treeFunc,
 

@@ -35,7 +35,7 @@ const props = defineProps({
 	config: {
 		type: Object,
 		default: () => ({
-			theme: 'default',
+			theme: 'blue',
 			show: false,
 			title: '切换主题',
 		}),
@@ -63,11 +63,11 @@ const theme = [
 	{
 		name: '白色主题',
 		color: '#fffff',
-		value: 'default',
+		value: 'white',
 	},
 	{
 		name: '蓝色主题',
-		color: 'blue',
+		color: '#0054fe',
 		value: 'blue',
 	},
 	{

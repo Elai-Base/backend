@@ -8,11 +8,11 @@ import {
 	reqRoleUpdate,
 	reqRoleDelete,
 } from '@/api/set/role';
-import router from '@/router';
 import { Role, RoleSearch, RolePageList, RoleForm } from '@/types/set/role';
 import { ref } from 'vue';
 let useSetRoleStore = defineStore('set-role', () => {
 	const loading = ref<boolean>(false);
+	const showDialog = ref<boolean>(false);
 
 	const search = ref<RoleSearch>({
 		current_page: 1,
@@ -65,7 +65,10 @@ let useSetRoleStore = defineStore('set-role', () => {
 		loading.value = false;
 		if (response.code == 0) {
 			ElNotification.success('创建成功');
-			router.go(-1);
+			// 关闭弹窗
+			showDialog.value = false;
+			// 刷新列表
+			pageFunc();
 		}
 	}
 	async function updateFunc(data: RoleForm) {
@@ -74,7 +77,10 @@ let useSetRoleStore = defineStore('set-role', () => {
 		loading.value = false;
 		if (response.code == 0) {
 			ElNotification.success('更新成功');
-			router.go(-1);
+			// 关闭弹窗
+			showDialog.value = false;
+			// 刷新列表
+			pageFunc();
 		}
 	}
 	async function deleteFunc(id: number) {
@@ -98,6 +104,7 @@ let useSetRoleStore = defineStore('set-role', () => {
 	}
 	return {
 		loading,
+		showDialog,
 
 		search,
 		pageData,

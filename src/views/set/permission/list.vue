@@ -5,7 +5,7 @@
 			<div class="operation">
 				<el-button
 					type="primary"
-					@click="goAdd()"
+					@click="showAdd()"
 				>
 					添加
 				</el-button>
@@ -25,7 +25,7 @@
 				prop="name"
 				label="关联菜单"
 			></el-table-column>
-			<el-table-column label="接口地址">
+			<el-table-column label="接口权限">
 				<template #default="scope">
 					<span v-html="urlFilter(scope.row.permission.uri)"></span>
 				</template>
@@ -39,14 +39,14 @@
 					<el-row v-if="scope.row.permission.id">
 						<el-button
 							size="small"
-							@click="goPush(scope.row.permission)"
+							@click="showEdit(scope.row.permission.id)"
 						>
 							编辑
 						</el-button>
 						<el-button
 							size="small"
 							type="danger"
-							@click="permissionStore.del(scope.row.permission.id)"
+							@click="permissionStore.deleteFunc(scope.row.permission.id)"
 						>
 							删除
 						</el-button>
@@ -55,11 +55,12 @@
 			</el-table-column>
 		</el-table>
 	</el-card>
+	<PushDialog :config="pushConfig"></PushDialog>
 </template>
 
 <script lang="ts" setup>
-import { onMounted } from 'vue';
-import router from '@/router';
+import { onMounted, ref } from 'vue';
+import PushDialog from './pushDialog.vue';
 import usePermissionStore from '@/stores/set/permission';
 const permissionStore = usePermissionStore();
 
@@ -67,19 +68,21 @@ onMounted(async () => {
 	await permissionStore.treeFunc();
 });
 
-const goAdd = () => {
-	router.push({
-		path: '/set/permission/push',
-	});
+const pushConfig = ref({
+	title: '',
+	id: 0,
+});
+
+const showAdd = () => {
+	permissionStore.showDialog = true;
+	pushConfig.value.title = '新增';
+	pushConfig.value.id = 0;
 };
 
-const goPush = (id: number) => {
-	router.push({
-		path: '/set/permission/push',
-		query: {
-			id: id,
-		},
-	});
+const showEdit = (id: number) => {
+	permissionStore.showDialog = true;
+	pushConfig.value.title = '编辑';
+	pushConfig.value.id = id;
 };
 
 const urlFilter = (url: string) => {
