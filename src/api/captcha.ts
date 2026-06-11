@@ -6,6 +6,6 @@ enum api {
 	check = '/captcha/check',
 }
 
-import { GetReq, CheckReq } from '@/types/captcha';
+import type { GetReq, CheckReq } from '@/types/captcha';
 export const reqCaptchaGet = (data: GetReq) => axios.get(api.get, { params: data });
 export const reqCaptchaCheck = (data: CheckReq) => axios.post(api.check, data);

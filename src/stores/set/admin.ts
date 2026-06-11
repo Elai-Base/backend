@@ -10,9 +10,8 @@ import {
 	reqAdminAllList,
 } from '@/api/set/admin';
 
-import router from '@/router';
 import { ref } from 'vue';
-import { Admin, AdminForm, AdminPageList, AdminSearch } from '@/types/set/admin';
+import type { Admin, AdminForm, AdminPageList, AdminSearch } from '@/types/set/admin';
 let useSetAdminStore = defineStore('set-admin', () => {
 	const loading = ref<boolean>(false);
 	const showDialog = ref<boolean>(false);

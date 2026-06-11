@@ -1,47 +1,52 @@
 {
 	"name": "backend",
-	"private": true,
 	"version": "1.0.0",
+	"private": true,
 	"type": "module",
-	"engines": {
-		"node": "^20.19.0 || >=22.12.0"
-	},
 	"scripts": {
 		"dev": "vite",
 		"build:test": "vite build --mode test",
 		"build:prod": "vite build --mode production",
 		"preview": "vite preview",
-		"lint": "eslint src",
+		"lint": "run-s lint:*",
+		"lint:oxlint": "oxlint . --fix",
+		"lint:eslint": "eslint . --fix --cache",
 		"fix": "eslint src --fix",
 		"format": "prettier --write src/",
 		"prepare": "husky install",
 		"commitlint": "commitlint --config commitlint.config.cjs -e -V"
 	},
 	"dependencies": {
-		"axios": "^1.12.2",
+		"axios": "^1.13.6",
 		"crypto-js": "^4.2.0",
-		"element-plus": "^2.11.4",
+		"element-plus": "^2.13.5",
 		"go-captcha-vue": "^2.0.6",
-		"pinia": "^3.0.3",
-		"vue": "^3.5.22",
-		"vue-router": "^4.5.1"
+		"pinia": "^3.0.4",
+		"vue": "^3.5.30",
+		"vue-router": "^4.6.4"
 	},
 	"devDependencies": {
-		"@commitlint/cli": "^20.1.0",
-		"@commitlint/config-conventional": "^20.0.0",
-		"@types/node": "^24.6.2",
-		"@typescript-eslint/eslint-plugin": "^8.45.0",
-		"@typescript-eslint/parser": "^8.45.0",
-		"@vitejs/plugin-vue": "^6.0.1",
-		"eslint": "^9.36.0",
+		"@commitlint/cli": "^20.4.3",
+		"@commitlint/config-conventional": "^20.4.3",
+		"@tsconfig/node24": "^24.0.4",
+		"@types/node": "^24.12.0",
+		"@typescript-eslint/eslint-plugin": "^8.57.0",
+		"@typescript-eslint/parser": "^8.57.0",
+		"@vitejs/plugin-vue": "^6.0.4",
+		"@vue/tsconfig": "^0.9.0",
+		"eslint": "^9.39.4",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-prettier": "^5.5.4",
-		"eslint-plugin-vue": "^10.5.0",
+		"eslint-plugin-prettier": "^5.5.5",
+		"eslint-plugin-vue": "^10.8.0",
 		"husky": "^9.1.7",
-		"prettier": "^3.6.2",
-		"sass": "^1.93.2",
+		"prettier": "^3.8.1",
+		"sass": "^1.98.0",
 		"typescript": "^5.9.3",
-		"vite": "^7.1.8",
-		"vue-tsc": "^3.1.0"
+		"vite": "^7.3.1",
+		"vite-plugin-vue-devtools": "^8.0.7",
+		"vue-tsc": "^3.2.5"
+	},
+	"engines": {
+		"node": "^20.19.0 || >=22.12.0"
 	}
 }

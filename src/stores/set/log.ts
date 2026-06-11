@@ -1,5 +1,5 @@
 import { reqLogPageList } from '@/api/set/log';
-import { LogPageData, LogSearch } from '@/types/set/log';
+import type { LogPageData, LogSearch } from '@/types/set/log';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 

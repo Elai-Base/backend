@@ -1,11 +1,10 @@
-import { MenuDeleteForm, MenuForm } from '@/types/set/menu';
+import type { MenuDeleteForm, MenuForm } from '@/types/set/menu';
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
 	tree = '/system/menus/tree',
 	all = '/system/menus/all',
-
-	uri = '/system/menu',
+	uri = '/system/menus',
 }
 //暴露请求函数
 export const reqMenuTreeList = () => axios.get(api.tree);

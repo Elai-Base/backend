@@ -7,8 +7,7 @@ import {
 	reqPermissionDelete,
 	reqPermissionCreate,
 } from '@/api/set/permission';
-import router from '@/router';
-import { Menu, Permission, PermissionForm } from '@/types/set/permission';
+import type { Menu, Permission, PermissionForm } from '@/types/set/permission';
 import { ref } from 'vue';
 let useSetPermissionStore = defineStore('set-permission', () => {
 	const loading = ref<boolean>(false);

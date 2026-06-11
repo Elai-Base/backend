@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia';
 import { reqCaptchaCheck, reqCaptchaGet } from '@/api/captcha';
 
-import { GetReq, GetRes, CheckReq, CheckRes, ClickData, SlideData } from '@/types/captcha';
+import type { GetReq, GetRes, CheckReq, CheckRes, ClickData, SlideData } from '@/types/captcha';
 import { ref } from 'vue';
 
 let useCaptchaStore = defineStore('captcha', () => {

@@ -1,7 +1,10 @@
-// https://vitejs.dev/config/
-import { defineConfig, loadEnv } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import path from 'path';
+import { fileURLToPath, URL } from 'node:url'
+
+import { defineConfig,loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import vueDevTools from 'vite-plugin-vue-devtools'
+
+// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
 	const env = loadEnv(mode, process.cwd(), '');
 	return {
@@ -13,9 +16,9 @@ export default defineConfig(({ mode }) => {
 		},
 		resolve: {
 			alias: {
-				'@': path.resolve('src'), //配置src的别名
+				'@': fileURLToPath(new URL('./src', import.meta.url)), //配置src的别名
 			},
 		},
-		plugins: [vue()],
+		plugins: [vue(), vueDevTools()],
 	};
 });

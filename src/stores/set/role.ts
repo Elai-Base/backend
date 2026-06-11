@@ -8,7 +8,7 @@ import {
 	reqRoleUpdate,
 	reqRoleDelete,
 } from '@/api/set/role';
-import { Role, RoleSearch, RolePageList, RoleForm } from '@/types/set/role';
+import type { Role, RoleSearch, RolePageList, RoleForm } from '@/types/set/role';
 import { ref } from 'vue';
 let useSetRoleStore = defineStore('set-role', () => {
 	const loading = ref<boolean>(false);

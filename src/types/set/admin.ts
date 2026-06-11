@@ -1,4 +1,4 @@
-import { Role } from './role.ts';
+import type { Role } from './role';
 
 // 管理员
 export type Admin = {

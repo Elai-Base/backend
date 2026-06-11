@@ -1,10 +1,10 @@
 <template>
 	<div class="page-login">
 		<div class="login-box">
-			<el-form class="form">
 				<div class="login-title">
 					<div class="title">欢迎登录</div>
 				</div>
+			<el-form class="login-form">
 				<el-form-item>
 					<el-input
 						placeholder="请输入账号"
@@ -51,8 +51,8 @@
 import { onMounted, ref } from 'vue';
 import useLoginStore from '@/stores/login';
 import useCaptchaStore from '@/stores/catpcha';
-import { LoginForm } from '@/types/login';
-import RandomCaptcha from '@/components/captcha/rand.vue';
+import type { LoginForm } from '@/types/login';
+import RandomCaptcha from '@/components/captcha/Rand.vue';
 import { ElNotification } from 'element-plus';
 const loginStore = useLoginStore();
 
@@ -92,8 +92,8 @@ onMounted(() => {
 .page-login {
 	width: 100%;
 	height: 100vh;
-	background: url('@/assets/images/login-bg.png') no-repeat;
-	background-size: cover;
+	background: linear-gradient(135deg, #165DFF 0%, #0F48C9 100%);
+
 
 	display: flex;
 	align-items: center;
@@ -101,26 +101,22 @@ onMounted(() => {
 
 	.login-box {
 		width: 600px;
-		border: 1px solid rgba(245, 245, 245, 1);
 		box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
 		background: #ffffff;
-		border-radius: 5px;
+		border-radius: 12px;
 
 		.login-title {
+			margin-top: 40px;
 			.title {
 				text-align: center;
-				font-size: 30px;
+				font-size: 24px;
 				font-weight: bold;
 			}
 		}
 
-		.form {
+		.login-form {
 			width: 80%;
-			margin: 10% auto;
-
-			.el-form-item {
-				margin-top: 20px;
-			}
+			margin: 24px auto;
 
 			.el-input {
 				height: 50px;
@@ -128,11 +124,13 @@ onMounted(() => {
 
 			.btn-login {
 				width: 100%;
-				background-color: #0054fe;
+				background: #165DFF;
 				color: #fff;
 				height: 50px;
 				line-height: 50px;
-				font-size: 16px;
+				font-size: 18px;
+				cursor: pointer;
+				letter-spacing: 3px;
 			}
 
 			.action-list {
@@ -144,6 +142,7 @@ onMounted(() => {
 
 				.action {
 					color: rgba(136, 136, 136, 1);
+					cursor: pointer;
 				}
 			}
 		}

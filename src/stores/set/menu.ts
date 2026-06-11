@@ -9,7 +9,7 @@ import {
 } from '@/api/set/menu';
 import router from '@/router';
 import { ref } from 'vue';
-import { Breadcrumb, Menu, MenuForm } from '@/types/set/menu';
+import type { Breadcrumb, Menu, MenuForm } from '@/types/set/menu';
 
 let useSetMenuStore = defineStore('set-menu', () => {
 	const loading = ref<boolean>(false);

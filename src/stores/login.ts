@@ -4,7 +4,7 @@ import { ElNotification } from 'element-plus';
 import router from '@/router';
 
 import storage from '@/utils/storage';
-import { LoginEnv, LoginForm, LoginRes } from '@/types/login';
+import type { LoginEnv, LoginForm, LoginRes } from '@/types/login';
 import { ref } from 'vue';
 
 let useLoginStore = defineStore('login', () => {

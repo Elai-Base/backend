@@ -1,4 +1,4 @@
-import { LogSearch } from '@/types/set/log';
+import type { LogSearch } from '@/types/set/log';
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
