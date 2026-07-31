@@ -3,7 +3,6 @@ const routes = [
 		path: '/login',
 		name: 'login',
 		component: () => import('@/views/login.vue'),
-		
 	},
 
 	{
@@ -219,15 +218,6 @@ const routes = [
 						meta: {
 							title: '分类列表',
 							level: 2,
-						},
-					},
-					{
-						path: 'push',
-						name: '/article/category/push',
-						component: () => import('@/views/article/category/push.vue'),
-						meta: {
-							title: '编辑分类',
-							level: 3,
 						},
 					},
 				],

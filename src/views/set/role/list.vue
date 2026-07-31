@@ -42,6 +42,26 @@
 				prop="name"
 				label="角色名称"
 			></el-table-column>
+			<el-table-column
+				width="100"
+				label="启用/禁用"
+			>
+				<template #default="scope">
+					<el-switch
+						v-if="scope.row.id > 1"
+						v-model="scope.row.is_hid"
+						style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+						:active-value="0"
+						:inactive-value="1"
+						@change="able(scope.row)"
+					/>
+				</template>
+			</el-table-column>
+			<el-table-column
+				width="200"
+				prop="created_at"
+				label="创建时间"
+			></el-table-column>
 
 			<el-table-column
 				label="操作"
@@ -75,6 +95,7 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
+import { RoleAbleForm } from '@/types/set/role';
 import PushDialog from '@/views/set/role/pushDialog.vue';
 import useRoleStore from '@/stores/set/role';
 const roleStore = useRoleStore();
@@ -82,6 +103,14 @@ const roleStore = useRoleStore();
 onMounted(async () => {
 	await roleStore.pageFunc();
 });
+
+const able = (row: any) => {
+	const form = ref<RoleAbleForm>({
+		ids: [row.id],
+		is_hid: row.is_hid,
+	});
+	roleStore.ableFunc(form.value);
+};
 
 const search = () => {
 	roleStore.search.current_page = 1;

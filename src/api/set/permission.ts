@@ -9,5 +9,5 @@ export const reqPermissionTreeList = () => axios.get(api.tree);
 
 export const reqPermissionInfo = (id: number) => axios.get(api.uri + '/' + id);
 export const reqPermissionCreate = (data: any) => axios.post(api.uri, data);
-export const reqPermissionUpdate = (data: any) => axios.put(api.uri, data);
-export const reqPermissionDelete = (data: any) => axios.delete(api.uri, data);
+export const reqPermissionUpdate = (data: any) => axios.put(api.uri + '/' + data.id, data);
+export const reqPermissionDelete = (data: any) => axios.delete(api.uri, { data: data });

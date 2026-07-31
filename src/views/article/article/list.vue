@@ -1,29 +1,26 @@
 <template>
 	<el-card>
-		<div class="search">
-			<el-row>
-				<el-col :span="8">
-					<el-row>
-						<el-input
-							v-model="articleStore.search.keyword"
-							placeholder="请输入标题进行搜索"
-						></el-input>
-					</el-row>
-				</el-col>
-				<el-col
-					:span="2"
-					:offset="1"
-				>
+		<el-card>
+			<div class="search">
+				<div class="condition">
+					<el-input
+						v-model="articleStore.search.keyword"
+						placeholder="请输入关键字进行搜索"
+						style="width: 240px"
+					></el-input>
+				</div>
+				<div class="operation">
 					<el-button
-						type="success"
-						@click="articleStore.searchList()"
-						>搜索</el-button
+						type="info"
+						@click="showAdd()"
 					>
-				</el-col>
-			</el-row>
-		</div>
+						搜索
+					</el-button>
+				</div>
+			</div>
+		</el-card>
 		<el-table
-			:data="articleStore.list"
+			:data="articleStore.pageData.list"
 			row-key="id"
 			:border="true"
 			v-loading="articleStore.loading"
@@ -75,7 +72,7 @@
 			</el-table-column>
 		</el-table>
 		<Pagination
-			:total="articleStore.total"
+			:total="articleStore.pageData.total"
 			@paginationData="paginationData"
 		></Pagination>
 	</el-card>
@@ -88,7 +85,7 @@ import useArticleStore from '@/stores/article/article';
 const articleStore = useArticleStore();
 
 onMounted(async () => {
-	await articleStore.getPageList();
+	await articleStore.pageFunc();
 });
 
 function paginationData(val) {

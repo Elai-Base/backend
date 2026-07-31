@@ -8,10 +8,17 @@ import {
 	reqAdminUpdate,
 	reqAdminDelete,
 	reqAdminAllList,
+	reqAdminAble,
 } from '@/api/set/admin';
 
 import { ref } from 'vue';
-import type { Admin, AdminForm, AdminPageList, AdminSearch } from '@/types/set/admin';
+import type {
+	Admin,
+	AdminForm,
+	AdminPageList,
+	AdminSearch,
+	AdminAbleForm,
+} from '@/types/set/admin';
 let useSetAdminStore = defineStore('set-admin', () => {
 	const loading = ref<boolean>(false);
 	const showDialog = ref<boolean>(false);
@@ -111,6 +118,15 @@ let useSetAdminStore = defineStore('set-admin', () => {
 			pageFunc();
 		}
 	}
+
+	async function ableFunc(data: AdminAbleForm) {
+		const response: any = await reqAdminAble(data);
+		if (response.code == 0) {
+			ElNotification.success('更新成功');
+			// 刷新列表
+			pageFunc();
+		}
+	}
 	async function deleteFunc(id: number) {
 		const confirm = await ElMessageBox.confirm('确认删除？', '提示', {
 			confirmButtonText: '确定',
@@ -150,6 +166,7 @@ let useSetAdminStore = defineStore('set-admin', () => {
 		createFunc,
 		updateFunc,
 		deleteFunc,
+		ableFunc,
 	};
 });
 

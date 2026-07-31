@@ -7,8 +7,9 @@ import {
 	reqRoleCreate,
 	reqRoleUpdate,
 	reqRoleDelete,
+	reqRoleAble,
 } from '@/api/set/role';
-import type { Role, RoleSearch, RolePageList, RoleForm } from '@/types/set/role';
+import type { Role, RoleSearch, RolePageList, RoleForm, RoleAbleForm } from '@/types/set/role';
 import { ref } from 'vue';
 let useSetRoleStore = defineStore('set-role', () => {
 	const loading = ref<boolean>(false);
@@ -83,6 +84,15 @@ let useSetRoleStore = defineStore('set-role', () => {
 			pageFunc();
 		}
 	}
+
+	async function ableFunc(data: RoleAbleForm) {
+		const response: any = await reqRoleAble(data);
+		if (response.code == 0) {
+			ElNotification.success('操作成功成功');
+			// 刷新列表
+			pageFunc();
+		}
+	}
 	async function deleteFunc(id: number) {
 		const confirm = await ElMessageBox.confirm('确认删除？', '提示', {
 			confirmButtonText: '确定',
@@ -119,6 +129,7 @@ let useSetRoleStore = defineStore('set-role', () => {
 		createFunc,
 		updateFunc,
 		deleteFunc,
+		ableFunc,
 	};
 });
 

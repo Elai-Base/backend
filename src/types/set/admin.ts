@@ -38,3 +38,7 @@ export type AdminForm = {
 export type AdminDeleteForm = {
 	ids: number[];
 };
+
+export type AdminAbleForm = {
+	ids: number[];
+};

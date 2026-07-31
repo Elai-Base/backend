@@ -1,4 +1,4 @@
-import type { AdminDeleteForm, AdminForm, AdminSearch } from '@/types/set/admin';
+import type { AdminDeleteForm, AdminForm, AdminSearch, AdminAbleForm } from '@/types/set/admin';
 import axios from '@/utils/axios';
 //统一管理接口
 enum api {
@@ -6,6 +6,7 @@ enum api {
 	all = '/admins/all',
 	login_info = '/admins/info',
 	uri = '/admins',
+	able = 'admins/able',
 }
 //暴露请求函数
 export const reqAdminLoginInfo = () => axios.get(api.login_info);
@@ -15,5 +16,6 @@ export const reqAdminAllList = () => axios.get(api.all);
 export const reqAdminInfo = (id: number) => axios.get(api.uri + '/' + id);
 
 export const reqAdminCreate = (data: AdminForm) => axios.post(api.uri, data);
-export const reqAdminUpdate = (data: AdminForm) => axios.put(api.uri + '/' + data.idnp, data);
+export const reqAdminUpdate = (data: AdminForm) => axios.put(api.uri + '/' + data.id, data);
+export const reqAdminAble = (data: AdminAbleForm) => axios.put(api.able, data);
 export const reqAdminDelete = (data: AdminDeleteForm) => axios.delete(api.uri, { data: data });

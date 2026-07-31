@@ -52,6 +52,26 @@
 				</template>
 			</el-table-column>
 			<el-table-column
+				width="100"
+				label="启用/禁用"
+			>
+				<template #default="scope">
+					<el-switch
+						v-if="scope.row.id > 1"
+						v-model="scope.row.is_hid"
+						style="--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+						:active-value="0"
+						:inactive-value="1"
+						@change="able(scope.row)"
+					/>
+				</template>
+			</el-table-column>
+			<el-table-column
+				width="200"
+				prop="created_at"
+				label="创建时间"
+			></el-table-column>
+			<el-table-column
 				label="操作"
 				width="180"
 			>
@@ -83,6 +103,8 @@
 
 <script lang="ts" setup>
 import { onMounted, ref } from 'vue';
+import { AdminAbleForm } from '@/types/set/admin';
+
 import PushDialog from '@/views/set/admin/pushDialog.vue';
 import useAdminStore from '@/stores/set/admin';
 const adminStore = useAdminStore();
@@ -94,6 +116,14 @@ onMounted(async () => {
 const search = () => {
 	adminStore.search.current_page = 1;
 	adminStore.pageFunc();
+};
+
+const able = (row: any) => {
+	const form = ref<AdminAbleForm>({
+		ids: [row.id],
+		is_hid: row.is_hid,
+	});
+	adminStore.ableFunc(form.value);
 };
 
 const paginationData = (val: { page: number; page_size: number }) => {

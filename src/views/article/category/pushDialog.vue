@@ -1,9 +1,10 @@
 <template>
-	<el-card>
-		<template #header>
-			<span>编辑</span>
-			<el-button @click="router.go(-1)">返回</el-button>
-		</template>
+	<el-dialog
+		v-model="categoryStore.showDialog"
+		:title="config.title"
+		@close="categoryStore.showDialog = false"
+		width="600px"
+	>
 		<el-form
 			label-width="120px"
 			v-loading="categoryStore.loading"
@@ -43,7 +44,7 @@
 				></el-input>
 			</el-form-item>
 			<el-form-item>
-				<el-button @click="router.go(-1)">返回</el-button>
+				<el-button @click="categoryStore.showDialog = false">返回</el-button>
 				<el-button
 					type="primary"
 					@click="update()"
@@ -51,16 +52,28 @@
 				>
 			</el-form-item>
 		</el-form>
-	</el-card>
+	</el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue';
+import { ref, watch } from 'vue';
+
+const props = defineProps({
+	config: {
+		type: Object,
+		default: () => ({
+			title: '新增',
+			id: 0,
+		}),
+	},
+});
+
 import { useRouter } from 'vue-router';
 import router from '@/router';
 import useArticleCategoryStore from '@/stores/article/category';
 const categoryStore = useArticleCategoryStore();
-const form = ref({
+
+const form = ref(<CategoryForm>{
 	id: 0,
 	parent_id: 0,
 	name: '',
@@ -69,17 +82,27 @@ const form = ref({
 	weight: 0,
 });
 
-onMounted(async () => {
-	const route = useRouter();
-	const query = route.currentRoute.value.query;
-	if (query.id > 0) {
-		await categoryStore.getInfo(query.id);
-		form.value = categoryStore.info;
-	}
-});
+watch(
+	() => categoryStore.showDialog,
+	async (newVal) => {
+		if (newVal) {
+			// 弹窗打开时，刷新菜单树
+			form.value.name = '';
+			form.value.id = props.config.id;
+			if (props.config.id > 0) {
+				await categoryStore.infoFunc(props.config.id);
+				form.value = categoryStore.info;
+			}
+		}
+	},
+);
 
 function update() {
-	form.value.weight = parseInt(form.value.weight);
-	categoryStore.update(form.value);
+	if (form.value.id && form.value.id > 0) {
+		form.value.weight = Number(form.value.weight);
+		categoryStore.updateFunc(form.value);
+	} else {
+		categoryStore.createFunc(form.value);
+	}
 }
 </script>

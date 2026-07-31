@@ -1,21 +1,21 @@
 <template>
 	<el-card>
-		<div class="search">
-			<el-row>
-				<el-col
-					:span="2"
-					:offset="22"
-				>
+		<el-card>
+			<div class="search">
+				<div class="condition"></div>
+				<div class="operation">
 					<el-button
 						type="primary"
-						@click="goPush(null)"
-						>添加</el-button
+						@click="showAdd()"
 					>
-				</el-col>
-			</el-row>
-		</div>
+						添加
+					</el-button>
+				</div>
+			</div>
+		</el-card>
 		<el-table
-			:data="categoryStore.treeList"
+			class="mt10"
+			:data="categoryStore.tree"
 			row-key="id"
 			:border="true"
 			default-expand-all
@@ -34,38 +34,44 @@
 				<template #default="scope">
 					<el-button
 						size="small"
-						@click="goPush(scope.row)"
+						@click="showEdit(scope.row.id)"
 						>编辑</el-button
 					>
 					<el-button
 						size="small"
 						type="danger"
-						@click="del(scope.row)"
+						@click="categoryStore.deleteFunc(scope.row.id)"
 						>删除</el-button
 					>
 				</template>
 			</el-table-column>
 		</el-table>
 	</el-card>
+	<PushDialog v-model:config="pushConfig"></PushDialog>
 </template>
 
 <script lang="ts" setup>
-import useCategoryStore from '@/stores/article/category';
-const categoryStore = useCategoryStore();
-categoryStore.getTreeList();
+import { onMounted, ref } from 'vue';
+import useArticleCategoryStore from '@/stores/article/category';
 
-import router from '@/router';
+import PushDialog from '@/views/article/category/pushDialog.vue';
+const categoryStore = useArticleCategoryStore();
 
-function goPush(row: any) {
-	router.push({
-		path: '/article/category/push',
-		query: {
-			id: row ? row.id : 0,
-		},
-	});
-}
-
-function del(row: any = null) {
-	categoryStore.del(row.id);
-}
+onMounted(async () => {
+	await categoryStore.treeFunc();
+});
+const pushConfig = ref({
+	title: '',
+	id: 0,
+});
+const showAdd = () => {
+	categoryStore.showDialog = true;
+	pushConfig.value.title = '新增';
+	pushConfig.value.id = 0;
+};
+const showEdit = (id: number) => {
+	categoryStore.showDialog = true;
+	pushConfig.value.title = '编辑';
+	pushConfig.value.id = id;
+};
 </script>

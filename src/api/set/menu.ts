@@ -12,5 +12,5 @@ export const reqMenuAllList = () => axios.get(api.all);
 
 export const reqMenuInfo = (id: number) => axios.get(api.uri + '/' + id);
 export const reqMenuCreate = (data: MenuForm) => axios.post(api.uri, data);
-export const reqMenuUpdate = (data: MenuForm) => axios.put(api.uri, data);
+export const reqMenuUpdate = (data: MenuForm) => axios.put(api.uri + '/' + data.id, data);
 export const reqMenuDelete = (data: MenuDeleteForm) => axios.delete(api.uri, { data: data });

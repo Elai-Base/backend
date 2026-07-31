@@ -31,3 +31,7 @@ export type RoleForm = {
 export type RoleDeleteForm = {
 	ids: number[];
 };
+
+export type RoleAbleForm = {
+	ids: number[];
+};
